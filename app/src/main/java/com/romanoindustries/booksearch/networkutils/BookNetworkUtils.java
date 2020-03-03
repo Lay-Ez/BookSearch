@@ -25,6 +25,8 @@ public class BookNetworkUtils {
     private static final String STANDARD_QUERY_PARAMETER = "q";
     private static final String MAX_RESULTS_QUERY_PARAMETER = "maxResults";
 
+    public static final int MAX_RESULTS_DEFAULT = 40;
+
     public static URL composeURL(String query, int maxResults) {
         Uri builtUri = Uri.parse(BASE_GOOGLE_BOOKS_API_URL)
                 .buildUpon()
@@ -39,6 +41,10 @@ public class BookNetworkUtils {
             Log.d(TAG, "composeURL: composed URI=" + builtUri.toString());
             return null;
         }
+    }
+
+    public static URL composeURL(String query) {
+       return composeURL(query, MAX_RESULTS_DEFAULT);
     }
 
     public static String getResponseFromUrl(URL url) {
@@ -89,11 +95,16 @@ public class BookNetworkUtils {
             JSONObject volumeInfoJson = jsonBook.getJSONObject("volumeInfo");
             volumeInfo.setTitle(volumeInfoJson.optString("title", "No Title"));
 
-            JSONArray authorsArray = volumeInfoJson.getJSONArray("authors");
-            for (int i = 0; i < authorsArray.length(); i++) {
-                String author = authorsArray.getString(i);
-                volumeInfo.addAuthorToList(author);
+            JSONArray authorsArray = volumeInfoJson.optJSONArray("authors");
+            if (authorsArray != null) {
+                for (int i = 0; i < authorsArray.length(); i++) {
+                    String author = authorsArray.getString(i);
+                    volumeInfo.addAuthorToList(author);
+                }
+            } else {
+                volumeInfo.addAuthorToList("No Author");
             }
+
             volumeInfo.setPublisher(volumeInfoJson.optString("publisher", "No Publisher"));
             volumeInfo.setPublishedDate(volumeInfoJson.optString("publishedDate", "No Published Date"));
             volumeInfo.setDescription(volumeInfoJson.optString("description", "No Description"));
