@@ -1,10 +1,10 @@
-package com.romanoindustries.booksearch.NetworkUtils;
+package com.romanoindustries.booksearch.networkutils;
 
 import android.net.Uri;
 import android.util.Log;
 
-import com.romanoindustries.booksearch.BookData.Book;
-import com.romanoindustries.booksearch.BookData.VolumeInfo;
+import com.romanoindustries.booksearch.bookmodel.Book;
+import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -106,6 +106,7 @@ public class BookNetworkUtils {
             }
 
             volumeInfo.setAvgRating(volumeInfoJson.optDouble("averageRating", 0));
+            volumeInfo.setRatingsCount(volumeInfoJson.optInt("ratingsCount", 0));
 
             JSONObject imageLinks = volumeInfoJson.getJSONObject("imageLinks");
             volumeInfo.setSmallThumbnailURL(imageLinks.optString("smallThumbnail", ""));

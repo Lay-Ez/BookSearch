@@ -1,4 +1,4 @@
-package com.romanoindustries.booksearch.BookData;
+package com.romanoindustries.booksearch.bookmodel;
 
 public class Book {
 

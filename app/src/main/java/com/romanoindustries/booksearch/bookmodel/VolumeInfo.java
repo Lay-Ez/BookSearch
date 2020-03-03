@@ -1,4 +1,4 @@
-package com.romanoindustries.booksearch.BookData;
+package com.romanoindustries.booksearch.bookmodel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ public class VolumeInfo {
     private int pageCount;
     private List<String> categories = new ArrayList<>();
     private double avgRating;
+    private int ratingsCount;
     private String smallThumbnailURL;
     private String thumbnailURL;
     private String language;
@@ -143,5 +144,13 @@ public class VolumeInfo {
 
     public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
+    }
+
+    public int getRatingsCount() {
+        return ratingsCount;
+    }
+
+    public void setRatingsCount(int ratingsCount) {
+        this.ratingsCount = ratingsCount;
     }
 }

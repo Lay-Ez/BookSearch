@@ -1,39 +1,38 @@
 package com.romanoindustries.booksearch;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.romanoindustries.booksearch.BookData.Book;
-import com.romanoindustries.booksearch.NetworkUtils.BookNetworkUtils;
+import com.romanoindustries.booksearch.bookmodel.Book;
 
-import java.net.URL;
-import java.util.List;
-import java.util.function.Consumer;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private RecyclerView booksRecyclerView;
+    private RecyclerView.Adapter<BooksAdapter.BookViewHolder> booksAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        booksRecyclerView = findViewById(R.id.books_list);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                URL url = BookNetworkUtils.composeURL("harry", 5);
-                String response = BookNetworkUtils.getResponseFromUrl(url);
-                List<Book> books = BookNetworkUtils.parseBooksFromJson(response);
-                books.forEach(new Consumer<Book>() {
-                    @Override
-                    public void accept(Book book) {
-                        Log.d(TAG, "accept: " + book.getVolumeInfo());
-                    }
-                });
-            }
-        }).start();
+        initRecyclerView();
 
     }
+
+    private void initRecyclerView() {
+        booksAdapter = new BooksAdapter(new ArrayList<Book>());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        booksRecyclerView.setAdapter(booksAdapter);
+        booksRecyclerView.setLayoutManager(layoutManager);
+
+    }
+
+    private void showProgressBar() {}
+    private void hideProgressBar() {}
 }
