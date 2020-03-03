@@ -17,13 +17,30 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private RecyclerView booksRecyclerView;
     private RecyclerView.Adapter<BooksAdapter.BookViewHolder> booksAdapter;
+//    private MainActivityViewModel mainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         booksRecyclerView = findViewById(R.id.books_list);
-        new TestFetchBooks().execute("The тёлки");
+
+//        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+////        mainActivityViewModel.getBooksData().observe(this, new Observer<List<Book>>() {
+////            @Override
+////            public void onChanged(List<Book> books) {
+////                booksAdapter.notifyDataSetChanged();
+////            }
+////        });
+
+        new TestFetchBooks().execute("Agatha");
+    }
+
+    private void initRecyclerView() {
+//        booksAdapter = new BooksAdapter(mainActivityViewModel.getBooksData().getValue());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        booksRecyclerView.setAdapter(booksAdapter);
+        booksRecyclerView.setLayoutManager(layoutManager);
     }
 
     class TestFetchBooks extends AsyncTask<String, Void, List<Book>> {
