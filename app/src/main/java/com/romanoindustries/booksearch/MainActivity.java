@@ -1,7 +1,6 @@
 package com.romanoindustries.booksearch;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -34,10 +33,11 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                Log.d(TAG, "onChanged: MVVM");
                 booksAdapter.updateBooks(books);
             }
         });
+
+        mainActivityViewModel.loadBooks("50 shades");
     }
 
     private void initRecyclerView() {

@@ -1,7 +1,5 @@
 package com.romanoindustries.booksearch.viewmodels;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
@@ -31,7 +29,6 @@ public class MainActivityViewModel extends ViewModel {
         mediatorLiveData.addSource(booksLiveData, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                Log.d(TAG, "onChanged: mediator received new value MVVM");
                 mediatorLiveData.setValue(books);
             }
         });
@@ -44,5 +41,4 @@ public class MainActivityViewModel extends ViewModel {
     public void loadBooks(String query) {
         booksRepository.loadBooks(query);
     }
-
 }
