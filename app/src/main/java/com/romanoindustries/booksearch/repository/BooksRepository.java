@@ -9,7 +9,6 @@ import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.networkutils.BookNetworkUtils;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BooksRepository {
@@ -30,8 +29,6 @@ public class BooksRepository {
     }
 
     public LiveData<List<Book>> getBooks() {
-        //setting value to empty list here to avoid NPE in adapter
-        booksMutable.setValue(new ArrayList<Book>());
         return booksMutable;
     }
 

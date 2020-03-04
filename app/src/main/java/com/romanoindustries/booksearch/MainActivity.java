@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.viewmodels.MainActivityViewModel;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                if (books.size() == 0) {
+                if (books == null || books.size() == 0) {
                     hideList();
                     return;
                 }
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        booksAdapter = new BooksAdapter(mainActivityViewModel.getBooks().getValue());
+        booksAdapter = new BooksAdapter(new ArrayList<Book>()); /*creating adapter with empty list to avoid NPE at start*/
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         booksRecyclerView.setAdapter(booksAdapter);
         booksRecyclerView.setLayoutManager(layoutManager);
