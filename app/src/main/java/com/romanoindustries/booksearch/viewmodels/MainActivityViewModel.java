@@ -4,7 +4,6 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
@@ -16,19 +15,15 @@ import java.util.List;
 public class MainActivityViewModel extends ViewModel {
     private static final String TAG = "MainActivityViewModel";
 
-    private MutableLiveData<List<Book>> booksMutableData;
     private LiveData<List<Book>> booksLiveData;
     private MediatorLiveData<List<Book>> mediatorLiveData;
     private BooksRepository booksRepository;
-    private MutableLiveData<Boolean> isLoading;
 
     public void init() {
-        if (booksMutableData != null) {
+        if (mediatorLiveData != null) {
             return;
         }
         booksRepository = BooksRepository.getInstance();
-
-        booksMutableData = new MutableLiveData<>();
         booksLiveData = booksRepository.getBooks();
 
         mediatorLiveData = new MediatorLiveData<>();
