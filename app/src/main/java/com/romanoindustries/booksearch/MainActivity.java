@@ -1,6 +1,8 @@
 package com.romanoindustries.booksearch;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -20,12 +22,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView booksRecyclerView;
     private BooksAdapter booksAdapter;
     private MainActivityViewModel mainActivityViewModel;
+    private TextView emptyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         booksRecyclerView = findViewById(R.id.books_list);
+        emptyTextView = findViewById(R.id.empty_text_view);
 
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init();
@@ -34,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
+                if (books.size() == 0) {
+                    hideList();
+                    return;
+                }
                 books.sort(new Comparator<Book>() {
                     @Override
                     public int compare(Book book1, Book book2) {
@@ -43,11 +51,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 booksAdapter.updateBooks(books);
+                showList();
             }
         });
 
         //for tests only
-        mainActivityViewModel.loadBooks("agatha");
+        mainActivityViewModel.loadBooks("Hello");
     }
 
     private void initRecyclerView() {
@@ -55,5 +64,16 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         booksRecyclerView.setAdapter(booksAdapter);
         booksRecyclerView.setLayoutManager(layoutManager);
+        hideList();
+    }
+
+    private void hideList() {
+        booksRecyclerView.setVisibility(View.GONE);
+        emptyTextView.setVisibility(View.VISIBLE);
+    }
+
+    private void showList() {
+        emptyTextView.setVisibility(View.GONE);
+        booksRecyclerView.setVisibility(View.VISIBLE);
     }
 }
