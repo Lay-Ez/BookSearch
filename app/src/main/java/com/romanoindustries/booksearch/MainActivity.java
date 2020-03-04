@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.viewmodels.MainActivityViewModel;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,11 +34,20 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
+                books.sort(new Comparator<Book>() {
+                    @Override
+                    public int compare(Book book1, Book book2) {
+                        int countRatings1 = book1.getVolumeInfo().getRatingsCount();
+                        int countRatings2 = book2.getVolumeInfo().getRatingsCount();
+                        return countRatings2 - countRatings1;
+                    }
+                });
                 booksAdapter.updateBooks(books);
             }
         });
 
-        mainActivityViewModel.loadBooks("50 shades");
+        //for tests only
+        mainActivityViewModel.loadBooks("agatha");
     }
 
     private void initRecyclerView() {

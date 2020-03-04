@@ -15,9 +15,7 @@ import java.util.List;
 public class BooksRepository {
 
     private static final String TAG = "BooksRepository";
-
     private static BooksRepository instance;
-
     private static MutableLiveData<List<Book>> booksMutable;
 
     public static BooksRepository getInstance() {
@@ -27,11 +25,11 @@ public class BooksRepository {
         return instance;
     }
 
-    private BooksRepository(){
+    private BooksRepository() {
         booksMutable = new MutableLiveData<>();
     }
 
-    public LiveData<List<Book>> getBooks(){
+    public LiveData<List<Book>> getBooks() {
         //setting value to empty list here to avoid NPE in adapter
         booksMutable.setValue(new ArrayList<Book>());
         return booksMutable;

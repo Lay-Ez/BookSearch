@@ -21,6 +21,7 @@ public class MainActivityViewModel extends ViewModel {
         if (mediatorLiveData != null) {
             return;
         }
+
         booksRepository = BooksRepository.getInstance();
         booksLiveData = booksRepository.getBooks();
 
