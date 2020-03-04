@@ -1,7 +1,9 @@
 package com.romanoindustries.booksearch.repository;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.romanoindustries.booksearch.bookmodel.Book;
@@ -13,8 +15,11 @@ import java.util.List;
 
 public class BooksRepository {
 
+    private static final String TAG = "BooksRepository";
+
     private static BooksRepository instance;
-    private List<Book> booksData = new ArrayList<>();
+
+    private MutableLiveData<List<Book>> booksMutable;
 
     public static BooksRepository getInstance() {
         if (instance == null) {
@@ -23,27 +28,34 @@ public class BooksRepository {
         return instance;
     }
 
-    public MutableLiveData<List<Book>> getBooks() {
-        // TODO: 03.03.2020 implement
-        return null;
+    private BooksRepository(){
+        booksMutable = new MutableLiveData<>();
     }
 
-    private void setBooksData() {
-        // TODO: 03.03.2020 implement
+    public LiveData<List<Book>> getBooks(){
+        //setting empty value to empty list here to avoid NPE in adapter
+        booksMutable.setValue(new ArrayList<Book>());
+        return booksMutable;
     }
 
-    class FetchBooksData extends AsyncTask<String, Void, List<Book>> {
+    public void loadBooks(String query) {
+        new FetchData().execute(query);
+    }
+
+    class FetchData extends AsyncTask<String, Void, List<Book>> {
         @Override
         protected List<Book> doInBackground(String... strings) {
             String query = strings[0];
-            URL url = BookNetworkUtils.composeURL(query, 40);
+            URL url = BookNetworkUtils.composeURL(query);
             String response = BookNetworkUtils.getResponseFromUrl(url);
+            Log.d(TAG, "doInBackground: got response MVVM");
             return BookNetworkUtils.parseBooksFromJson(response);
         }
 
         @Override
         protected void onPostExecute(List<Book> books) {
-            booksData = books;
+            Log.d(TAG, "onPostExecute: setting new value MVVM");
+            booksMutable.setValue(books);
         }
     }
 }

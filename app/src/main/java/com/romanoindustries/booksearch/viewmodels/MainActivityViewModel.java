@@ -1,7 +1,11 @@
 package com.romanoindustries.booksearch.viewmodels;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.romanoindustries.booksearch.bookmodel.Book;
@@ -10,19 +14,40 @@ import com.romanoindustries.booksearch.repository.BooksRepository;
 import java.util.List;
 
 public class MainActivityViewModel extends ViewModel {
+    private static final String TAG = "MainActivityViewModel";
 
-    private MutableLiveData<List<Book>> booksData;
-    private BooksRepository booksRepo;
+    private MutableLiveData<List<Book>> booksMutableData;
+    private LiveData<List<Book>> booksLiveData;
+    private MediatorLiveData<List<Book>> mediatorLiveData;
+    private BooksRepository booksRepository;
+    private MutableLiveData<Boolean> isLoading;
 
     public void init() {
-        if (booksData != null) {
+        if (booksMutableData != null) {
             return;
         }
-        booksRepo = BooksRepository.getInstance();
-        booksData = booksRepo.getBooks();
+        booksRepository = BooksRepository.getInstance();
+
+        booksMutableData = new MutableLiveData<>();
+        booksLiveData = booksRepository.getBooks();
+
+        mediatorLiveData = new MediatorLiveData<>();
+        mediatorLiveData.setValue(booksLiveData.getValue());
+        mediatorLiveData.addSource(booksLiveData, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+                Log.d(TAG, "onChanged: mediator received new value MVVM");
+                mediatorLiveData.setValue(books);
+            }
+        });
     }
 
-    public LiveData<List<Book>> getBooksData() {
-        return booksData;
+    public LiveData<List<Book>> getBooks() {
+        return mediatorLiveData;
     }
+
+    public void loadBooks(String query) {
+        booksRepository.loadBooks(query);
+    }
+
 }

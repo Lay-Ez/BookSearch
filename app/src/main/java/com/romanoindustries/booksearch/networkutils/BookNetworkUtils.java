@@ -110,11 +110,16 @@ public class BookNetworkUtils {
             volumeInfo.setDescription(volumeInfoJson.optString("description", "No Description"));
             volumeInfo.setPageCount(volumeInfoJson.optInt("pageCount", 0));
 
-            JSONArray categoriesArray = volumeInfoJson.getJSONArray("categories");
-            for (int i = 0; i < categoriesArray.length(); i++) {
-                String category = categoriesArray.getString(i);
-                volumeInfo.addCategory(category);
+            JSONArray categoriesArray = volumeInfoJson.optJSONArray("categories");
+            if (categoriesArray != null) {
+                for (int i = 0; i < categoriesArray.length(); i++) {
+                    String category = categoriesArray.getString(i);
+                    volumeInfo.addCategory(category);
+                }
+            } else {
+                volumeInfo.addCategory("No Categories");
             }
+
 
             volumeInfo.setAvgRating(volumeInfoJson.optDouble("averageRating", 0));
             volumeInfo.setRatingsCount(volumeInfoJson.optInt("ratingsCount", 0));
