@@ -20,6 +20,7 @@
                 app:contentScrim="@color/design_default_color_background"
                 app:layout_scrollFlags="scroll|enterAlways"
 
+                app:titleEnabled="false"
                 app:toolbarId="@+id/toolbar">
 
 
@@ -28,11 +29,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="@color/colorPrimary"
+                    android:elevation="4dp"
                     android:minHeight="?attr/actionBarSize"
-                    android:theme="?attr/actionBarTheme"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                    app:title="@string/app_name"
+                    app:titleTextColor="@color/design_default_color_surface" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
