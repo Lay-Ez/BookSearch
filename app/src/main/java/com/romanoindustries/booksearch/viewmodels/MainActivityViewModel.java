@@ -14,29 +14,45 @@ public class MainActivityViewModel extends ViewModel {
     private static final String TAG = "MainActivityViewModel";
 
     private LiveData<List<Book>> booksLiveData;
-    private MediatorLiveData<List<Book>> mediatorLiveData;
+    private LiveData<Boolean> isLoading;
+    private MediatorLiveData<List<Book>> mediatorLiveDataBooks;
+    private MediatorLiveData<Boolean> mediatorLiveDataIsLoading;
     private BooksRepository booksRepository;
 
     public void init() {
-        if (mediatorLiveData != null) {
+        if (mediatorLiveDataBooks != null) {
             return;
         }
 
         booksRepository = BooksRepository.getInstance();
-        booksLiveData = booksRepository.getBooks();
 
-        mediatorLiveData = new MediatorLiveData<>();
-        mediatorLiveData.setValue(booksLiveData.getValue());
-        mediatorLiveData.addSource(booksLiveData, new Observer<List<Book>>() {
+        booksLiveData = booksRepository.getBooks();
+        mediatorLiveDataBooks = new MediatorLiveData<>();
+        mediatorLiveDataBooks.setValue(booksLiveData.getValue());
+        mediatorLiveDataBooks.addSource(booksLiveData, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                mediatorLiveData.setValue(books);
+                mediatorLiveDataBooks.setValue(books);
+            }
+        });
+
+        isLoading = booksRepository.getIsLoading();
+        mediatorLiveDataIsLoading = new MediatorLiveData<>();
+        mediatorLiveDataIsLoading.setValue(isLoading.getValue());
+        mediatorLiveDataIsLoading.addSource(isLoading, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                mediatorLiveDataIsLoading.setValue(aBoolean);
             }
         });
     }
 
     public LiveData<List<Book>> getBooks() {
-        return mediatorLiveData;
+        return mediatorLiveDataBooks;
+    }
+
+    public LiveData<Boolean> getIsLoading() {
+        return mediatorLiveDataIsLoading;
     }
 
     public void loadBooks(String query) {
