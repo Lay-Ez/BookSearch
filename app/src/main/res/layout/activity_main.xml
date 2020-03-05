@@ -20,7 +20,7 @@
                 app:contentScrim="@color/design_default_color_background"
                 app:layout_scrollFlags="scroll|enterAlways"
 
-                app:titleEnabled="false"
+                app:titleEnabled="true"
                 app:toolbarId="@+id/toolbar">
 
 
