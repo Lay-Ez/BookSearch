@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         booksRecyclerView = findViewById(R.id.books_list);
         emptyTextView = findViewById(R.id.empty_text_view);
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
 
