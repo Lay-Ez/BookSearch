@@ -24,7 +24,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
     private List<Book> books;
 
-    BooksAdapter(List<Book> books) {
+    public BooksAdapter(List<Book> books) {
         this.books = books;
     }
 
@@ -32,7 +32,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         return books;
     }
 
-    void updateBooks(List<Book> books) {
+    public void updateBooks(List<Book> books) {
         this.books = books;
         notifyDataSetChanged();
     }
