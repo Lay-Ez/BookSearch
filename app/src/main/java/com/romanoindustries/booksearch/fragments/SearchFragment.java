@@ -1,16 +1,13 @@
 package com.romanoindustries.booksearch.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +18,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.romanoindustries.booksearch.BookViewActivity;
 import com.romanoindustries.booksearch.R;
 import com.romanoindustries.booksearch.adapters.BooksAdapter;
@@ -38,7 +34,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     private BooksAdapter booksAdapter;
     private SearchFragmentViewModel searchFragmentViewModel;
     private TextView emptyTextView;
-    private TextInputEditText searchInputText;
+    private SearchView searchView;
     private ProgressBar progressBar;
 
     @Nullable
@@ -47,21 +43,30 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         initViews(view);
 
-
-        searchInputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    performSearch();
-                    return true;
-                }
-                return false;
-            }
-        });
-
         searchFragmentViewModel = new ViewModelProvider(this).get(SearchFragmentViewModel.class);
         searchFragmentViewModel.init();
         initRecyclerView();
+
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setIconified(false);
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchFragmentViewModel.loadBooks(query);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         searchFragmentViewModel.getBooks().observe(this, new Observer<List<Book>>() {
             @Override
@@ -99,7 +104,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     private void initViews(View view) {
         booksRecyclerView = view.findViewById(R.id.books_list);
         emptyTextView = view.findViewById(R.id.empty_text_view);
-        searchInputText = view.findViewById(R.id.edit_text_search);
+        searchView = view.findViewById(R.id.search_books_sv);
         progressBar = view.findViewById(R.id.progress_bar);
     }
 
@@ -130,14 +135,6 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
 
     private void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
-    }
-
-    private void performSearch() {
-        String query = searchInputText.getText().toString();
-        searchFragmentViewModel.loadBooks(query);
-        searchInputText.clearFocus();
-        InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        in.hideSoftInputFromWindow(searchInputText.getWindowToken(), 0);
     }
 
     @Override
