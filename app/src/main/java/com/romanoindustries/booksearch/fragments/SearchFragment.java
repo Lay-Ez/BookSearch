@@ -3,6 +3,7 @@ package com.romanoindustries.booksearch.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.romanoindustries.booksearch.adapters.BooksAdapter;
+import com.romanoindustries.booksearch.BookViewActivity;
 import com.romanoindustries.booksearch.R;
+import com.romanoindustries.booksearch.adapters.BooksAdapter;
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.viewmodels.SearchFragmentViewModel;
 
@@ -30,6 +32,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SearchFragment extends Fragment implements BooksAdapter.OnBookListener {
+    private static final String TAG = "SearchFragment";
 
     private RecyclerView booksRecyclerView;
     private BooksAdapter booksAdapter;
@@ -101,7 +104,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     }
 
     private void initRecyclerView() {
-        booksAdapter = new BooksAdapter(searchFragmentViewModel.getBooks().getValue());
+        booksAdapter = new BooksAdapter(searchFragmentViewModel.getBooks().getValue(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         booksRecyclerView.setAdapter(booksAdapter);
         booksRecyclerView.setLayoutManager(layoutManager);
@@ -139,6 +142,11 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
 
     @Override
     public void onBookClick(int position) {
-        Intent viewBookIntent = new Intent();
+        Intent viewBookIntent = new Intent(getContext(), BookViewActivity.class);
+        String bookUrl = searchFragmentViewModel.getBooks().getValue().get(position).getSelfLink();
+        Log.d(TAG, "onBookClick: clicked the book at pos " + position);
+        Log.d(TAG, "onBookClick: bookurl = " + bookUrl);
+        viewBookIntent.putExtra(Intent.EXTRA_CONTENT_QUERY, bookUrl);
+        startActivity(viewBookIntent);
     }
 }

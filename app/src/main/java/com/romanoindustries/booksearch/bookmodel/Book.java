@@ -10,11 +10,13 @@ public class Book {
         this.selfLink = selfLink;
     }
 
+
+
     public VolumeInfo getVolumeInfo() {
         return volumeInfo;
     }
 
-    public void setVolumeInfo(VolumeInfo volumeInfo) {
-        this.volumeInfo = volumeInfo;
+    public String getSelfLink() {
+        return selfLink;
     }
 }

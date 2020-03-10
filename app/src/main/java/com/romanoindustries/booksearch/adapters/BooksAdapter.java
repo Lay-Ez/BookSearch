@@ -24,9 +24,11 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
     private static final String TAG = "BooksAdapter";
 
     private List<Book> books;
+    private OnBookListener onBookListener;
 
-    public BooksAdapter(List<Book> books) {
+    public BooksAdapter(List<Book> books, OnBookListener onBookListener) {
         this.books = books;
+        this.onBookListener = onBookListener;
     }
 
     public List<Book> getBooks() {
@@ -46,7 +48,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         int listItemResourceId = R.layout.book_list_item;
 
         View view = inflater.inflate(listItemResourceId, parent, false);
-        return new BookViewHolder(view);
+        return new BookViewHolder(view, onBookListener);
     }
 
     @Override
@@ -66,14 +68,22 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         private TextView tv_authors;
         private RatingBar rb_rating;
         private TextView tv_numRatings;
+        private OnBookListener onBookListener;
 
-        public BookViewHolder(@NonNull final View itemView) {
+        public BookViewHolder(@NonNull final View itemView, final OnBookListener onBookListener) {
             super(itemView);
             iv_bookThumb = itemView.findViewById(R.id.iv_book_thumb);
             tv_bookTitle = itemView.findViewById(R.id.tv_book_title);
             tv_authors = itemView.findViewById(R.id.tv_authors);
             rb_rating = itemView.findViewById(R.id.rb_rating);
             tv_numRatings = itemView.findViewById(R.id.tv_num_ratings);
+            this.onBookListener = onBookListener;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBookListener.onBookClick(getAdapterPosition());
+                }
+            });
         }
 
         public void bind(Book book) {
