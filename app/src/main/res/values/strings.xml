@@ -4,5 +4,11 @@
     <string name="empty_list">No Books Found =(</string>
     <string name="search_hint">Search books…</string>
 
+<!--    used in fragment_book_view -->
+    <string name="avg_rating">Rating</string>
+    <string name="num_reviews">Reviews</string>
+    <string name="num_pages">Pages</string>
+    <string name="reviews">Reviews</string>
+    <string name="review">Review</string>
 
 </resources>
