@@ -1,22 +1,23 @@
 package com.romanoindustries.booksearch;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.romanoindustries.booksearch.viewmodels.BookViewActivityViewModel;
 
 public class BookViewActivity extends AppCompatActivity {
     private static final String TAG = "BookViewActivity";
-
-    private BookViewActivityViewModel viewModel;
+    private BookViewActivityViewModel viewBookViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view);
-        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.book_view_collapsing);
-        collapsingToolbarLayout.setTitle("Hello!");
+        viewBookViewModel = new ViewModelProvider(this).get(BookViewActivityViewModel.class);
+        String bookUrl = getIntent().getStringExtra(Intent.EXTRA_CONTENT_QUERY);
+        viewBookViewModel.loadBook(bookUrl);
     }
 }
