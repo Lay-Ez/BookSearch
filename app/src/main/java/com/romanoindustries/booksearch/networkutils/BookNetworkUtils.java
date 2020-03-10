@@ -87,7 +87,7 @@ public class BookNetworkUtils {
         return parsedBooks;
     }
 
-    private static Book parseJsonBook(JSONObject jsonBook) {
+    public static Book parseJsonBook(JSONObject jsonBook) {
 
         VolumeInfo volumeInfo = new VolumeInfo();
 
