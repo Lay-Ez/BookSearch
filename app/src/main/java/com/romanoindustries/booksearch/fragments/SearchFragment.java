@@ -1,6 +1,7 @@
 package com.romanoindustries.booksearch.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,19 +21,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.romanoindustries.booksearch.BooksAdapter;
+import com.romanoindustries.booksearch.adapters.BooksAdapter;
 import com.romanoindustries.booksearch.R;
 import com.romanoindustries.booksearch.bookmodel.Book;
-import com.romanoindustries.booksearch.viewmodels.MainActivityViewModel;
+import com.romanoindustries.booksearch.viewmodels.SearchFragmentViewModel;
 
 import java.util.Comparator;
 import java.util.List;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements BooksAdapter.OnBookListener {
 
     private RecyclerView booksRecyclerView;
     private BooksAdapter booksAdapter;
-    private MainActivityViewModel mainActivityViewModel;
+    private SearchFragmentViewModel searchFragmentViewModel;
     private TextView emptyTextView;
     private TextInputEditText searchInputText;
     private ProgressBar progressBar;
@@ -55,11 +56,11 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        mainActivityViewModel.init();
+        searchFragmentViewModel = new ViewModelProvider(this).get(SearchFragmentViewModel.class);
+        searchFragmentViewModel.init();
         initRecyclerView();
 
-        mainActivityViewModel.getBooks().observe(this, new Observer<List<Book>>() {
+        searchFragmentViewModel.getBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
                 if (books == null || books.size() == 0) {
@@ -79,7 +80,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        mainActivityViewModel.getIsLoading().observe(this, new Observer<Boolean>() {
+        searchFragmentViewModel.getIsLoading().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
@@ -100,10 +101,11 @@ public class SearchFragment extends Fragment {
     }
 
     private void initRecyclerView() {
-        booksAdapter = new BooksAdapter(mainActivityViewModel.getBooks().getValue());
+        booksAdapter = new BooksAdapter(searchFragmentViewModel.getBooks().getValue());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         booksRecyclerView.setAdapter(booksAdapter);
         booksRecyclerView.setLayoutManager(layoutManager);
+
         hideList();
     }
 
@@ -129,9 +131,14 @@ public class SearchFragment extends Fragment {
 
     private void performSearch() {
         String query = searchInputText.getText().toString();
-        mainActivityViewModel.loadBooks(query);
+        searchFragmentViewModel.loadBooks(query);
         searchInputText.clearFocus();
         InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(searchInputText.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onBookClick(int position) {
+        Intent viewBookIntent = new Intent();
     }
 }

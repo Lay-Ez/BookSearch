@@ -1,4 +1,4 @@
-package com.romanoindustries.booksearch;
+package com.romanoindustries.booksearch.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.romanoindustries.booksearch.R;
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
 import com.romanoindustries.booksearch.imagetransformation.RoundedCornersTransformation;
@@ -66,7 +67,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         private RatingBar rb_rating;
         private TextView tv_numRatings;
 
-        public BookViewHolder(@NonNull View itemView) {
+        public BookViewHolder(@NonNull final View itemView) {
             super(itemView);
             iv_bookThumb = itemView.findViewById(R.id.iv_book_thumb);
             tv_bookTitle = itemView.findViewById(R.id.tv_book_title);
@@ -94,5 +95,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             Transformation transformation = new RoundedCornersTransformation(radius, margin);
             Picasso.get().load(url).transform(transformation).into(iv_bookThumb);
         }
+    }
+
+    public interface OnBookListener{
+        void onBookClick(int position);
     }
 }

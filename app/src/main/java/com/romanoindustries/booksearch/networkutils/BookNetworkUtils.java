@@ -136,6 +136,7 @@ public class BookNetworkUtils {
             e.printStackTrace();
         }
 
-        return new Book(volumeInfo);
+        String selfLinkUrl = jsonBook.optString("selfLink", "");
+        return new Book(volumeInfo, selfLinkUrl);
     }
 }

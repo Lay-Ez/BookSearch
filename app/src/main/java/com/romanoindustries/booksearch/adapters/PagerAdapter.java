@@ -1,4 +1,4 @@
-package com.romanoindustries.booksearch;
+package com.romanoindustries.booksearch.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.romanoindustries.booksearch.adapters.PagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
