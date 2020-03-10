@@ -44,7 +44,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.search_fragment_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
         initViews(view);
 
 

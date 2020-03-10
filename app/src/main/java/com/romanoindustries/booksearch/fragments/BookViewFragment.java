@@ -10,10 +10,11 @@ import androidx.fragment.app.Fragment;
 
 import com.romanoindustries.booksearch.R;
 
-public class SavedBooksFragment extends Fragment {
+
+public class BookViewFragment extends Fragment {
 
 
-    public SavedBooksFragment() {
+    public BookViewFragment() {
         // Required empty public constructor
     }
 
@@ -21,8 +22,7 @@ public class SavedBooksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_saved_books, container, false);
+        return inflater.inflate(R.layout.fragment_book_view, container, false);
     }
 
 }
