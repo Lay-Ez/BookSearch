@@ -14,18 +14,23 @@
             android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/book_view_collapsing"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
 
+                android:layout_height="wrap_content"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                app:titleEnabled="false"
                 app:toolbarId="@+id/toolbar">
 
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"></androidx.appcompat.widget.Toolbar>
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/colorPrimary"
+                    app:title="@string/app_name"
+                    app:titleTextColor="@color/design_default_color_background" />
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
