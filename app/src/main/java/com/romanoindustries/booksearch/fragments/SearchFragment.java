@@ -2,7 +2,6 @@ package com.romanoindustries.booksearch.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -167,8 +166,6 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     public void onBookClick(int position) {
         Intent viewBookIntent = new Intent(getContext(), BookViewActivity.class);
         String bookUrl = searchFragmentViewModel.getBooks().getValue().get(position).getSelfLink();
-        Log.d(TAG, "onBookClick: clicked the book at pos " + position);
-        Log.d(TAG, "onBookClick: bookurl = " + bookUrl);
         viewBookIntent.putExtra(Intent.EXTRA_CONTENT_QUERY, bookUrl);
         startActivity(viewBookIntent);
     }

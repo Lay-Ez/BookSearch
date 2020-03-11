@@ -1,7 +1,6 @@
 package com.romanoindustries.booksearch.viewmodels;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -57,7 +56,6 @@ public class BookViewActivityViewModel extends ViewModel {
                 url = new URL(stringUrl);
                 String response = BookNetworkUtils.getResponseFromUrl(url);
                 if (response.equals("")) {
-                    Log.d(TAG, "doInBackground: responseFromUrl was empty");
                     return null;
                 }
                 JSONObject bookJson = new JSONObject(response);
@@ -72,7 +70,6 @@ public class BookViewActivityViewModel extends ViewModel {
         protected void onPostExecute(Book book) {
             isLoading.setValue(false);
             bookMutableLiveData.setValue(book);
-            Log.d(TAG, "onPostExecute: setting book live data to " + book.getVolumeInfo().getTitle());
         }
     }
 }

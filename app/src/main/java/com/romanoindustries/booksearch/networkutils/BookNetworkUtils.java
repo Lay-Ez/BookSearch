@@ -1,7 +1,6 @@
 package com.romanoindustries.booksearch.networkutils;
 
 import android.net.Uri;
-import android.util.Log;
 
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
@@ -44,7 +43,6 @@ public class BookNetworkUtils {
             return new URL(builtUri.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            Log.d(TAG, "composeURL: composed URI=" + builtUri.toString());
             return null;
         }
     }

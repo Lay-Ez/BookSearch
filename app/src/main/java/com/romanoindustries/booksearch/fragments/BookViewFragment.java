@@ -2,7 +2,6 @@ package com.romanoindustries.booksearch.fragments;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +52,8 @@ public class BookViewFragment extends Fragment {
             @Override
             public void onChanged(Book book) {
                 if (book == null) {
-                    Log.d(TAG, "onChanged: book is now null");
+                    //
                 } else {
-                    Log.d(TAG, "onChanged: book is now " + book.getVolumeInfo().getTitle());
                     displayBook(book);
                 }
             }
