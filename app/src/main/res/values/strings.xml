@@ -10,5 +10,12 @@
     <string name="num_pages">Pages</string>
     <string name="reviews">Reviews</string>
     <string name="review">Review</string>
+    
+<!--    used in search fragment-->
+    <string name="search_everywhere">Everywhere</string>
+    <string name="search_by_title">By Title</string>
+    <string name="search_by_author">By Author</string>
+    <string name="search_by_publisher">By Publisher</string>
+    <string name="search_by_subject">By Subject</string>
 
 </resources>
