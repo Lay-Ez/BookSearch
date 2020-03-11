@@ -48,6 +48,8 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     public static final int SEARCH_BY_PUBLISHER = 3;
     public static final int SEARCH_BY_SUBJECT = 4;
 
+    private int currentSearchMode = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchFragmentViewModel.loadBooks(query);
+                searchFragmentViewModel.loadBooks(query, currentSearchMode);
                 searchView.clearFocus();
                 return true;
             }
@@ -171,7 +173,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         startActivity(viewBookIntent);
     }
 
-    PopupMenu.OnMenuItemClickListener searchMenuClickListener = new PopupMenu.OnMenuItemClickListener() {
+    private PopupMenu.OnMenuItemClickListener searchMenuClickListener = new PopupMenu.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             if (item.isChecked()) {
@@ -182,20 +184,21 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
 
             switch (item.getItemId()) {
                 case R.id.search_everywhere:
-                    searchFragmentViewModel.setSearchBy(SEARCH_EVERYWHERE);
+                    currentSearchMode = SEARCH_EVERYWHERE;
                     break;
                 case R.id.search_by_title:
-                    searchFragmentViewModel.setSearchBy(SEARCH_BY_TITLE);
+                    currentSearchMode = SEARCH_BY_TITLE;
                     break;
                 case R.id.search_by_author:
-                    searchFragmentViewModel.setSearchBy(SEARCH_BY_AUTHOR);
+                    currentSearchMode = SEARCH_BY_AUTHOR;
                     break;
                 case R.id.search_by_publisher:
-                    searchFragmentViewModel.setSearchBy(SEARCH_BY_PUBLISHER);
+                    currentSearchMode = SEARCH_BY_PUBLISHER;
                     break;
                 case R.id.search_by_subject:
-                    searchFragmentViewModel.setSearchBy(SEARCH_BY_SUBJECT);
+                    currentSearchMode = SEARCH_BY_SUBJECT;
                     break;
+
                     default:
                         //
             }

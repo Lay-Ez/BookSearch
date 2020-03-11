@@ -15,6 +15,7 @@ import java.util.List;
 public class BooksRepository {
 
     private static final String TAG = "BooksRepository";
+
     private static BooksRepository instance;
     private static MutableLiveData<List<Book>> booksMutable;
     private static MutableLiveData<Boolean> isLoading;
@@ -40,21 +41,21 @@ public class BooksRepository {
         return isLoading;
     }
 
-    public void loadBooks(String query) {
-        new FetchData().execute(query);
+    public void loadBooks(String query, int searchMode) {
+        URL url = BookNetworkUtils.composeURL(query, 40, searchMode);
+        new FetchBooks().execute(url);
     }
 
-    static class FetchData extends AsyncTask<String, Void, List<Book>> {
+    static class FetchBooks extends AsyncTask<URL, Void, List<Book>> {
+
         @Override
         protected void onPreExecute() {
             isLoading.setValue(true);
         }
 
         @Override
-        protected List<Book> doInBackground(String... strings) {
-            String query = strings[0];
-            URL url = BookNetworkUtils.composeURL(query);
-            String response = BookNetworkUtils.getResponseFromUrl(url);
+        protected List<Book> doInBackground(URL... urls) {
+            String response = BookNetworkUtils.getResponseFromUrl(urls[0]);
             return BookNetworkUtils.parseBooksFromJson(response);
         }
 

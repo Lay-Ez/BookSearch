@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
+import com.romanoindustries.booksearch.fragments.SearchFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,9 +26,14 @@ public class BookNetworkUtils {
     private static final String STANDARD_QUERY_PARAMETER = "q";
     private static final String MAX_RESULTS_QUERY_PARAMETER = "maxResults";
 
-    public static final int MAX_RESULTS_DEFAULT = 40;
+    private static final String SEARCH_IN_TITLE = " intitle:";
+    private static final String SEARCH_IN_AUTHOR = " inauthor:";
+    private static final String SEARCH_IN_PUBLISHER = " inpublisher:";
+    private static final String SEARCH_IN_SUBJECT = " subject:";
 
-    public static URL composeURL(String query, int maxResults) {
+    private static final int MAX_RESULTS_DEFAULT = 40;
+
+    private static URL composeURL(String query, int maxResults) {
         Uri builtUri = Uri.parse(BASE_GOOGLE_BOOKS_API_URL)
                 .buildUpon()
                 .appendQueryParameter(STANDARD_QUERY_PARAMETER, query)
@@ -39,6 +45,50 @@ public class BookNetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
             Log.d(TAG, "composeURL: composed URI=" + builtUri.toString());
+            return null;
+        }
+    }
+
+    public static URL composeURL(String query, int maxResults, int searchBy) {
+        String searchTerms = "";
+
+        switch (searchBy) {
+
+            case SearchFragment
+                    .SEARCH_EVERYWHERE:
+                return composeURL(query, maxResults);
+
+            case SearchFragment.SEARCH_BY_TITLE:
+                searchTerms = SEARCH_IN_TITLE;
+                break;
+
+            case SearchFragment.SEARCH_BY_AUTHOR:
+                searchTerms = SEARCH_IN_AUTHOR;
+                break;
+
+            case SearchFragment.SEARCH_BY_PUBLISHER:
+                searchTerms = SEARCH_IN_PUBLISHER;
+                break;
+
+            case SearchFragment.SEARCH_BY_SUBJECT:
+                searchTerms = SEARCH_IN_SUBJECT;
+                break;
+
+            default:
+        }
+        // string concat with special search term for specific searchMode
+        query = searchTerms + query;
+
+        Uri builtUri = Uri.parse(BASE_GOOGLE_BOOKS_API_URL)
+                .buildUpon()
+                .appendQueryParameter(STANDARD_QUERY_PARAMETER, query)
+                .appendQueryParameter(MAX_RESULTS_QUERY_PARAMETER, String.valueOf(maxResults))
+                .build();
+
+        try {
+            return new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
             return null;
         }
     }
