@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single" >
-        <item android:title="@string/search_everywhere" />
-        <item android:title="@string/search_by_title" />
-        <item android:title="@string/search_by_author" />
-        <item android:title="@string/search_by_publisher" />
-        <item android:title="@string/search_by_subject" />
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/search_everywhere"
+                android:checked="true"
+                android:title="@string/search_everywhere" />
+        <item
+                android:id="@+id/search_by_title"
+                android:title="@string/search_by_title" />
+        <item
+                android:id="@+id/search_by_author"
+                android:title="@string/search_by_author" />
+        <item
+                android:id="@+id/search_by_publisher"
+                android:title="@string/search_by_publisher" />
+        <item
+                android:id="@+id/search_by_subject"
+                android:title="@string/search_by_subject" />
     </group>
 </menu>

@@ -18,6 +18,7 @@ public class SearchFragmentViewModel extends ViewModel {
     private MediatorLiveData<List<Book>> mediatorLiveDataBooks;
     private MediatorLiveData<Boolean> mediatorLiveDataIsLoading;
     private BooksRepository booksRepository;
+    private int searchBy = 1; /*default by author*/
 
     public void init() {
         if (mediatorLiveDataBooks != null) {
@@ -57,5 +58,9 @@ public class SearchFragmentViewModel extends ViewModel {
 
     public void loadBooks(String query) {
         booksRepository.loadBooks(query);
+    }
+
+    public void setSearchBy(int searchBy) {
+        this.searchBy = searchBy;
     }
 }

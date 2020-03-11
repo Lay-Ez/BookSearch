@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -36,6 +39,14 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     private TextView emptyTextView;
     private SearchView searchView;
     private ProgressBar progressBar;
+    private ImageButton searchOptionsBtn;
+    private PopupMenu popupMenu;
+
+    public static final int SEARCH_EVERYWHERE = 0;
+    public static final int SEARCH_BY_TITLE = 1;
+    public static final int SEARCH_BY_AUTHOR = 2;
+    public static final int SEARCH_BY_PUBLISHER = 3;
+    public static final int SEARCH_BY_SUBJECT = 4;
 
     @Nullable
     @Override
@@ -65,6 +76,18 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+
+        searchOptionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (popupMenu == null) {
+                    popupMenu = new PopupMenu(getContext(), v);
+                    popupMenu.getMenuInflater().inflate(R.menu.search_popup_menu, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(searchMenuClickListener);
+                }
+                popupMenu.show();
             }
         });
 
@@ -106,6 +129,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         emptyTextView = view.findViewById(R.id.empty_text_view);
         searchView = view.findViewById(R.id.search_books_sv);
         progressBar = view.findViewById(R.id.progress_bar);
+        searchOptionsBtn = view.findViewById(R.id.search_menu_ib);
     }
 
     private void initRecyclerView() {
@@ -146,4 +170,36 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         viewBookIntent.putExtra(Intent.EXTRA_CONTENT_QUERY, bookUrl);
         startActivity(viewBookIntent);
     }
+
+    PopupMenu.OnMenuItemClickListener searchMenuClickListener = new PopupMenu.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (item.isChecked()) {
+                return true;
+            }
+
+            item.setChecked(!item.isChecked());
+
+            switch (item.getItemId()) {
+                case R.id.search_everywhere:
+                    searchFragmentViewModel.setSearchBy(SEARCH_EVERYWHERE);
+                    break;
+                case R.id.search_by_title:
+                    searchFragmentViewModel.setSearchBy(SEARCH_BY_TITLE);
+                    break;
+                case R.id.search_by_author:
+                    searchFragmentViewModel.setSearchBy(SEARCH_BY_AUTHOR);
+                    break;
+                case R.id.search_by_publisher:
+                    searchFragmentViewModel.setSearchBy(SEARCH_BY_PUBLISHER);
+                    break;
+                case R.id.search_by_subject:
+                    searchFragmentViewModel.setSearchBy(SEARCH_BY_SUBJECT);
+                    break;
+                    default:
+                        //
+            }
+            return true;
+        }
+    };
 }
