@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -163,11 +166,15 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     }
 
     @Override
-    public void onBookClick(int position) {
+    public void onBookClick(int position, ImageView imageForTransition) {
         Intent viewBookIntent = new Intent(getContext(), BookViewActivity.class);
         String bookUrl = searchFragmentViewModel.getBooks().getValue().get(position).getSelfLink();
         viewBookIntent.putExtra(Intent.EXTRA_CONTENT_QUERY, bookUrl);
-        startActivity(viewBookIntent);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                imageForTransition, ViewCompat.getTransitionName(imageForTransition));
+
+        startActivity(viewBookIntent, options.toBundle());
     }
 
     private PopupMenu.OnMenuItemClickListener searchMenuClickListener = new PopupMenu.OnMenuItemClickListener() {

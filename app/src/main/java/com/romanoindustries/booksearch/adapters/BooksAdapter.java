@@ -81,7 +81,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onBookListener.onBookClick(getAdapterPosition());
+                    onBookListener.onBookClick(getAdapterPosition(), iv_bookThumb);
                 }
             });
         }
@@ -108,6 +108,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
     }
 
     public interface OnBookListener{
-        void onBookClick(int position);
+        void onBookClick(int position, ImageView imageForTransition);
     }
 }

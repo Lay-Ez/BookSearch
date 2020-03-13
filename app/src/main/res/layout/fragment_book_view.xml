@@ -8,6 +8,7 @@
 
     <ImageView
             android:id="@+id/thumbnail_iv"
+            android:transitionName="book_thumb_transition"
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_marginStart="24dp"
