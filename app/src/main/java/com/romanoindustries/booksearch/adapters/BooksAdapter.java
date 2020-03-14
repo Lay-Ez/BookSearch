@@ -15,6 +15,7 @@ import com.romanoindustries.booksearch.R;
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
 import com.romanoindustries.booksearch.imagetransformation.RoundedCornersTransformation;
+import com.romanoindustries.booksearch.networkutils.BookNetworkUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -103,7 +104,11 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             int radius = 5;
             int margin = 5;
             Transformation transformation = new RoundedCornersTransformation(radius, margin);
-            Picasso.get().load(url).transform(transformation).into(iv_bookThumb);
+            if (url == null || url.equals("")) {
+                Picasso.get().load(BookNetworkUtils.NO_IMAGE_AVAILABLE_URL).transform(transformation).into(iv_bookThumb);
+            } else {
+                Picasso.get().load(url).transform(transformation).into(iv_bookThumb);
+            }
         }
     }
 

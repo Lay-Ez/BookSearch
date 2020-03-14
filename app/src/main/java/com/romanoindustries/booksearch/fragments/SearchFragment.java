@@ -173,7 +173,6 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 imageForTransition, ViewCompat.getTransitionName(imageForTransition));
-
         startActivity(viewBookIntent, options.toBundle());
     }
 

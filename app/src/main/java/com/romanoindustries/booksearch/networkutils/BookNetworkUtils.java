@@ -21,6 +21,8 @@ import java.util.Scanner;
 public class BookNetworkUtils {
     private static final String TAG = "BookNetworkUtils";
 
+    public static final String NO_IMAGE_AVAILABLE_URL = "https://vignette.wikia.nocookie.net/dragon-ball-z-final-stand/images/5/51/NoImage.png/revision/latest/scale-to-width-down/250?cb=20191102150901";
+
     private static final String BASE_GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
     private static final String STANDARD_QUERY_PARAMETER = "q";
     private static final String MAX_RESULTS_QUERY_PARAMETER = "maxResults";

@@ -7,15 +7,15 @@
 
     <ImageView
             android:id="@+id/iv_book_thumb"
-            android:transitionName="book_thumb_transition"
             android:layout_width="84dp"
-            android:layout_height="124dp"
+            android:layout_height="126dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/image_background"
             android:elevation="2dp"
             android:scaleType="fitXY"
+            android:transitionName="book_thumb_transition"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
