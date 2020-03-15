@@ -1,5 +1,7 @@
 package com.romanoindustries.booksearch.bookmodel;
 
+import androidx.room.ColumnInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,17 +10,31 @@ public class VolumeInfo {
     private String title;
     private List<String> authors = new ArrayList<>();
     private String publisher;
+
+    @ColumnInfo (name = "published_date")
     private String publishedDate;
     private String description;
     private int pageCount;
     private List<String> categories = new ArrayList<>();
+
+    @ColumnInfo (name = "avg_rating")
     private double avgRating;
+
+    @ColumnInfo (name = "ratings_count")
     private int ratingsCount;
+
+    @ColumnInfo (name = "small_thumb_url")
     private String smallThumbnailURL;
+
+    @ColumnInfo (name = "thumb_url")
     private String thumbnailURL;
     private String language;
-    private String previewLink;
-    private String infoLink;
+
+    @ColumnInfo (name = "preview_url")
+    private String previewUrl;
+
+    @ColumnInfo (name = "info_url")
+    private String infoUrl;
 
     public VolumeInfo() {
     }
@@ -37,8 +53,8 @@ public class VolumeInfo {
                 ", smallThumbnailURL='" + smallThumbnailURL + '\'' +
                 ", thumbnailURL='" + thumbnailURL + '\'' +
                 ", language='" + language + '\'' +
-                ", previewLink='" + previewLink + '\'' +
-                ", infoLink='" + infoLink + '\'' +
+                ", previewUrl='" + previewUrl + '\'' +
+                ", infoUrl='" + infoUrl + '\'' +
                 '}';
     }
 
@@ -106,20 +122,20 @@ public class VolumeInfo {
         this.language = language;
     }
 
-    public String getPreviewLink() {
-        return previewLink;
+    public String getPreviewUrl() {
+        return previewUrl;
     }
 
-    public void setPreviewLink(String previewLink) {
-        this.previewLink = previewLink;
+    public void setPreviewUrl(String previewUrl) {
+        this.previewUrl = previewUrl;
     }
 
-    public String getInfoLink() {
-        return infoLink;
+    public String getInfoUrl() {
+        return infoUrl;
     }
 
-    public void setInfoLink(String infoLink) {
-        this.infoLink = infoLink;
+    public void setInfoUrl(String infoUrl) {
+        this.infoUrl = infoUrl;
     }
 
     public String getPublisher() {
@@ -152,5 +168,13 @@ public class VolumeInfo {
 
     public void setRatingsCount(int ratingsCount) {
         this.ratingsCount = ratingsCount;
+    }
+
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 }

@@ -179,8 +179,8 @@ public class BookNetworkUtils {
             volumeInfo.setThumbnailURL(imageLinks.optString("thumbnail", ""));
 
             volumeInfo.setLanguage(volumeInfoJson.optString("language", "UNKNOWN"));
-            volumeInfo.setPreviewLink(volumeInfoJson.optString("previewLink", ""));
-            volumeInfo.setInfoLink(volumeInfoJson.optString("infoLink", ""));
+            volumeInfo.setPreviewUrl(volumeInfoJson.optString("previewLink", ""));
+            volumeInfo.setInfoUrl(volumeInfoJson.optString("infoLink", ""));
 
         } catch (JSONException e) {
             e.printStackTrace();
