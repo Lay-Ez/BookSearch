@@ -4,7 +4,6 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Room;
 
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.roomstuff.BookDao;
@@ -18,15 +17,9 @@ public class SavedBooksRepository {
     private LiveData<List<Book>> savedBooks;
 
     public SavedBooksRepository(Application application) {
-        SavedBooksDatabase booksDatabase = Room.databaseBuilder(
-                application,
-                SavedBooksDatabase.class,
-                "books_database")
-                .build();
-
         SavedBooksDatabase database = SavedBooksDatabase.getInstance(application);
-
         bookDao = database.bookDao();
+        savedBooks = bookDao.getAllBooks();
     }
 
     public void insertBook(Book book) {
@@ -46,7 +39,7 @@ public class SavedBooksRepository {
     }
 
     public LiveData<List<Book>> getSavedBooks() {
-        return bookDao.getAllBooks();
+        return savedBooks;
     }
 
     private static class InsertBookAsyncTask extends AsyncTask<Book, Void, Void> {
