@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -18,6 +17,7 @@ import com.romanoindustries.booksearch.viewmodels.SavedBooksViewModel;
 import java.util.List;
 
 public class SavedBooksFragment extends Fragment {
+    private static final String TAG = "SavedBooksFragment";
 
     private SavedBooksViewModel booksViewModel;
 
@@ -36,7 +36,7 @@ public class SavedBooksFragment extends Fragment {
         booksViewModel.getSavedBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                Toast.makeText(getContext(), "onCreate from fragment", Toast.LENGTH_SHORT).show();
+
             }
         });
 
