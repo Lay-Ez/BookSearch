@@ -24,7 +24,9 @@ public class SavedBooksRepository {
                 "books_database")
                 .build();
 
-        bookDao = booksDatabase.bookDao();
+        SavedBooksDatabase database = SavedBooksDatabase.getInstance(application);
+
+        bookDao = database.bookDao();
     }
 
     public void insertBook(Book book) {

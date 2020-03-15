@@ -175,6 +175,11 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 imageForTransition, ViewCompat.getTransitionName(imageForTransition));
 
+        /* Code for adding book to the saved list*/
+//        Book book = searchFragmentViewModel.getBooks().getValue().get(position);
+//        SavedBooksViewModel savedBooksViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication()).create(SavedBooksViewModel.class);
+//        savedBooksViewModel.insert(book);
+
         startActivity(viewBookIntent, options.toBundle());
     }
 

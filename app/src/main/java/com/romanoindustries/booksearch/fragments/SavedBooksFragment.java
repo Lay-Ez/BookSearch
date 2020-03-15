@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.viewmodels.SavedBooksViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookListener {
     private static final String TAG = "SavedBooksFragment";
@@ -48,6 +50,13 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         savedBooksRecyclerView.setLayoutManager(layoutManager);
         savedBooksRecyclerView.setAdapter(booksAdapter);
+
+        booksViewModel.getSavedBooks().observe(this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+                booksAdapter.updateBooks(books);
+            }
+        });
 
         return view;
     }
