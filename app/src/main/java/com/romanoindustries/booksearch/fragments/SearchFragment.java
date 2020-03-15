@@ -74,6 +74,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
             public boolean onQueryTextSubmit(String query) {
                 searchFragmentViewModel.loadBooks(query, currentSearchMode);
                 searchView.clearFocus();
+                booksRecyclerView.scrollToPosition(0);
                 return true;
             }
 
