@@ -2,22 +2,29 @@ package com.romanoindustries.booksearch.roomstuff;
 
 import androidx.room.TypeConverter;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 
 public class RoomConverters {
 
     @TypeConverter
     public static String authorsToString(List<String> authorsList) {
-        return new Gson().toJson(authorsList);
+        final StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < authorsList.size(); i++) {
+            if (i == authorsList.size() - 1) {
+                sb.append(authorsList.get(i));
+            } else {
+                sb.append(authorsList.get(i)).append(",");
+            }
+        }
+
+        return sb.toString();
     }
 
     @TypeConverter
-    public static List<String> stringToAuthors(String json) {
-        Type type = new TypeToken<List<String>>() {}.getClass();
-        return new Gson().fromJson(json, type);
+    public static List<String> stringToAuthors(String authors) {
+        String[] splitted = authors.split(",");
+        return Arrays.asList(splitted);
     }
 }
