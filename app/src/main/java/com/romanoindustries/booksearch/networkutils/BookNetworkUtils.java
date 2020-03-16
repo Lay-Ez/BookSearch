@@ -26,6 +26,7 @@ public class BookNetworkUtils {
     private static final String BASE_GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
     private static final String STANDARD_QUERY_PARAMETER = "q";
     private static final String MAX_RESULTS_QUERY_PARAMETER = "maxResults";
+    private static final String START_INDEX_QUERY_PARAMETER = "startIndex";
 
     private static final String SEARCH_IN_TITLE = " intitle:";
     private static final String SEARCH_IN_AUTHOR = " inauthor:";
@@ -95,6 +96,20 @@ public class BookNetworkUtils {
 
     public static URL composeURL(String query) {
        return composeURL(query, MAX_RESULTS_DEFAULT);
+    }
+
+    public static URL recomposeURLWithOffset(URL original, int offsetIndex) {
+        Uri builtUri = Uri.parse(original.toString())
+                .buildUpon()
+                .appendQueryParameter(START_INDEX_QUERY_PARAMETER, String.valueOf(offsetIndex))
+                .build();
+
+        try {
+            return new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static String getResponseFromUrl(URL url) {

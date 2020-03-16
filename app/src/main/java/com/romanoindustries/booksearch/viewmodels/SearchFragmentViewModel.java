@@ -58,4 +58,8 @@ public class SearchFragmentViewModel extends ViewModel {
     public void loadBooks(String query, int searchMode) {
         booksRepository.loadBooks(query, searchMode);
     }
+
+    public void loadMoreBooks() {
+        booksRepository.loadMore();
+    }
 }

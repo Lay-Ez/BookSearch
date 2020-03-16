@@ -151,6 +151,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
                 if ((searchFragmentViewModel.getBooks().getValue() != null) &&
                         (searchFragmentViewModel.getBooks().getValue().size() - 1) == layoutManager.findLastCompletelyVisibleItemPosition()) {
                     Log.d(TAG, "onScrolled: scrolled to the bottom");
+                    searchFragmentViewModel.loadMoreBooks();
                 }
             }
         });

@@ -1,6 +1,7 @@
 package com.romanoindustries.booksearch.repository;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -19,6 +20,9 @@ public class BooksRepository {
     private static BooksRepository instance;
     private static MutableLiveData<List<Book>> booksMutable;
     private static MutableLiveData<Boolean> isLoading;
+    private static URL lastAccessedUrl = null;
+    private static int totalLoadedResults;
+    private static boolean isEndOfListReached;
 
     public static BooksRepository getInstance() {
         if (instance == null) {
@@ -27,6 +31,8 @@ public class BooksRepository {
             isLoading = new MutableLiveData<>();
             booksMutable.setValue(new ArrayList<Book>()); /*default value to avoid NPE*/
             isLoading.setValue(false); /*default value to avoid NPE*/
+            totalLoadedResults = 0;
+            isEndOfListReached = false;
         }
         return instance;
     }
@@ -42,8 +48,21 @@ public class BooksRepository {
     }
 
     public void loadBooks(String query, int searchMode) {
+        isEndOfListReached = false;
         URL url = BookNetworkUtils.composeURL(query, 40, searchMode);
+        lastAccessedUrl = url;
         new FetchBooks().execute(url);
+    }
+
+    public void loadMore() {
+        if (isEndOfListReached) {
+            return;
+        }
+        URL lastUrl = lastAccessedUrl;
+        Log.d(TAG, "loadMore: lastUrl=" + lastUrl.toString());
+        URL urlWithStartingIndex = BookNetworkUtils.recomposeURLWithOffset(lastUrl, totalLoadedResults);
+        Log.d(TAG, "loadMore: newUrl=" + urlWithStartingIndex.toString());
+        new LoadMoreBooks().execute(urlWithStartingIndex);
     }
 
     static class FetchBooks extends AsyncTask<URL, Void, List<Book>> {
@@ -56,13 +75,37 @@ public class BooksRepository {
         @Override
         protected List<Book> doInBackground(URL... urls) {
             String response = BookNetworkUtils.getResponseFromUrl(urls[0]);
-            return BookNetworkUtils.parseBooksFromJson(response);
+            List<Book> result = BookNetworkUtils.parseBooksFromJson(response);
+            totalLoadedResults = result.size();
+            return  result;
         }
 
         @Override
         protected void onPostExecute(List<Book> books) {
             booksMutable.setValue(books);
             isLoading.setValue(false);
+        }
+    }
+
+    static class LoadMoreBooks extends AsyncTask<URL, Void, List<Book>> {
+        @Override
+        protected List<Book> doInBackground(URL... urls) {
+            String response = BookNetworkUtils.getResponseFromUrl(urls[0]);
+            List<Book> newlyLoadedBooks = BookNetworkUtils.parseBooksFromJson(response);
+            totalLoadedResults += newlyLoadedBooks.size();
+            return newlyLoadedBooks;
+        }
+
+        @Override
+        protected void onPostExecute(List<Book> books) {
+            if (books.size() == 0 || booksMutable.getValue() == null) {
+                Log.d(TAG, "onPostExecute: endOfListReached");
+                isEndOfListReached = true;
+                return;
+            }
+            List<Book> oldBooks = booksMutable.getValue();
+            oldBooks.addAll(books);
+            booksMutable.setValue(oldBooks);
         }
     }
 }
