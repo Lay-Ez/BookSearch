@@ -15,6 +15,7 @@ public class SearchFragmentViewModel extends ViewModel {
 
     private LiveData<List<Book>> booksLiveData;
     private LiveData<Boolean> isLoading;
+    private LiveData<Boolean> isLoadingMore;
     private MediatorLiveData<List<Book>> mediatorLiveDataBooks;
     private MediatorLiveData<Boolean> mediatorLiveDataIsLoading;
     private BooksRepository booksRepository;
@@ -45,6 +46,8 @@ public class SearchFragmentViewModel extends ViewModel {
                 mediatorLiveDataIsLoading.setValue(aBoolean);
             }
         });
+
+        isLoadingMore = booksRepository.getIsLoadingMore();
     }
 
     public LiveData<List<Book>> getBooks() {
@@ -53,6 +56,10 @@ public class SearchFragmentViewModel extends ViewModel {
 
     public LiveData<Boolean> getIsLoading() {
         return mediatorLiveDataIsLoading;
+    }
+
+    public LiveData<Boolean> getIsLoadingMore() {
+        return isLoadingMore;
     }
 
     public void loadBooks(String query, int searchMode) {

@@ -20,6 +20,7 @@ public class BooksRepository {
     private static BooksRepository instance;
     private static MutableLiveData<List<Book>> booksMutable;
     private static MutableLiveData<Boolean> isLoading;
+    private static MutableLiveData<Boolean> isLoadingMore;
     private static URL lastAccessedUrl = null;
     private static int totalLoadedResults;
     private static boolean isEndOfListReached;
@@ -29,8 +30,10 @@ public class BooksRepository {
             instance = new BooksRepository();
             booksMutable = new MutableLiveData<>();
             isLoading = new MutableLiveData<>();
+            isLoadingMore = new MutableLiveData<>();
             booksMutable.setValue(new ArrayList<Book>()); /*default value to avoid NPE*/
             isLoading.setValue(false); /*default value to avoid NPE*/
+            isLoadingMore.setValue(false);
             totalLoadedResults = 0;
             isEndOfListReached = false;
         }
@@ -45,6 +48,10 @@ public class BooksRepository {
 
     public LiveData<Boolean> getIsLoading() {
         return isLoading;
+    }
+
+    public LiveData<Boolean> getIsLoadingMore() {
+        return isLoadingMore;
     }
 
     public void loadBooks(String query, int searchMode) {
@@ -88,6 +95,12 @@ public class BooksRepository {
     }
 
     static class LoadMoreBooks extends AsyncTask<URL, Void, List<Book>> {
+
+        @Override
+        protected void onPreExecute() {
+            isLoadingMore.setValue(true);
+        }
+
         @Override
         protected List<Book> doInBackground(URL... urls) {
             String response = BookNetworkUtils.getResponseFromUrl(urls[0]);
@@ -98,6 +111,7 @@ public class BooksRepository {
 
         @Override
         protected void onPostExecute(List<Book> books) {
+            isLoadingMore.setValue(false);
             if (books.size() == 0 || booksMutable.getValue() == null) {
                 Log.d(TAG, "onPostExecute: endOfListReached");
                 isEndOfListReached = true;

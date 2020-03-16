@@ -128,6 +128,14 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
                 }
             }
         });
+
+
+        searchFragmentViewModel.getIsLoadingMore().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                Log.d(TAG, "onChanged: isLoadingMore=" + aBoolean.toString());
+            }
+        });
         return view;
     }
 
