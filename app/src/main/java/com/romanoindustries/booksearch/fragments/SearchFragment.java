@@ -30,7 +30,6 @@ import com.romanoindustries.booksearch.adapters.BooksAdapter;
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.viewmodels.SearchFragmentViewModel;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class SearchFragment extends Fragment implements BooksAdapter.OnBookListener {
@@ -106,14 +105,6 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
                     hideList();
                     return;
                 }
-                books.sort(new Comparator<Book>() {
-                    @Override
-                    public int compare(Book book1, Book book2) {
-                        int countRatings1 = book1.getVolumeInfo().getRatingsCount();
-                        int countRatings2 = book2.getVolumeInfo().getRatingsCount();
-                        return countRatings2 - countRatings1;
-                    }
-                });
                 booksAdapter.updateBooks(books);
                 showList();
             }

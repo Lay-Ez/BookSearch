@@ -25,6 +25,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/image_background"
+            android:elevation="2dp"
             android:queryBackground="@android:color/transparent"
             android:queryHint="@string/search_hint"
             app:layout_constraintEnd_toStartOf="@+id/search_menu_ib"
