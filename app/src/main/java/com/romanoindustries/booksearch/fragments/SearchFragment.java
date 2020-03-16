@@ -43,6 +43,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     private TextView emptyTextView;
     private SearchView searchView;
     private ProgressBar progressBar;
+    private ProgressBar loadMoreProgressBar;
     private ImageButton searchOptionsBtn;
     private PopupMenu popupMenu;
 
@@ -129,13 +130,17 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
             }
         });
 
-
         searchFragmentViewModel.getIsLoadingMore().observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean aBoolean) {
-                Log.d(TAG, "onChanged: isLoadingMore=" + aBoolean.toString());
+            public void onChanged(Boolean isLoadingMore) {
+                if (isLoadingMore) {
+                    loadMoreProgressBar.setVisibility(View.VISIBLE);
+                } else {
+                    loadMoreProgressBar.setVisibility(View.GONE);
+                }
             }
         });
+
         return view;
     }
 
@@ -145,6 +150,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         searchView = view.findViewById(R.id.search_books_sv);
         progressBar = view.findViewById(R.id.progress_bar);
         searchOptionsBtn = view.findViewById(R.id.search_menu_ib);
+        loadMoreProgressBar = view.findViewById(R.id.loading_more_pb);
     }
 
     private void initRecyclerView() {
