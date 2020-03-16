@@ -2,6 +2,7 @@ package com.romanoindustries.booksearch.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     private static final String TAG = "SearchFragment";
 
     private RecyclerView booksRecyclerView;
+    private LinearLayoutManager layoutManager;
     private BooksAdapter booksAdapter;
     private SearchFragmentViewModel searchFragmentViewModel;
     private TextView emptyTextView;
@@ -56,7 +58,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        initViews(view);
+        findViews(view);
 
         searchFragmentViewModel = new ViewModelProvider(this).get(SearchFragmentViewModel.class);
         searchFragmentViewModel.init();
@@ -129,7 +131,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         return view;
     }
 
-    private void initViews(View view) {
+    private void findViews(View view) {
         booksRecyclerView = view.findViewById(R.id.books_list);
         emptyTextView = view.findViewById(R.id.empty_text_view);
         searchView = view.findViewById(R.id.search_books_sv);
@@ -139,9 +141,19 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
 
     private void initRecyclerView() {
         booksAdapter = new BooksAdapter(searchFragmentViewModel.getBooks().getValue(), this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         booksRecyclerView.setAdapter(booksAdapter);
         booksRecyclerView.setLayoutManager(layoutManager);
+
+        booksRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if ((searchFragmentViewModel.getBooks().getValue() != null) &&
+                        (searchFragmentViewModel.getBooks().getValue().size() - 1) == layoutManager.findLastCompletelyVisibleItemPosition()) {
+                    Log.d(TAG, "onScrolled: scrolled to the bottom");
+                }
+            }
+        });
 
         hideList();
     }
