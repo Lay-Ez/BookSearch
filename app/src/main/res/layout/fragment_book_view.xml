@@ -15,7 +15,7 @@
             android:elevation="2dp"
             android:scaleType="fitXY"
             android:transitionName="book_thumb_transition"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@color/colorAccent" />
 
@@ -30,7 +30,7 @@
             android:textColor="@android:color/background_dark"
             android:textSize="26sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toEndOf="@+id/thumbnail_iv"
             app:layout_constraintTop_toTopOf="@+id/thumbnail_iv"
             tools:text="What Do You Say After You Say Hello" />
@@ -160,8 +160,8 @@
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/rating_label_tv" />
 
     <View
@@ -170,8 +170,8 @@
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@id/barrier3" />
 
     <TextView
@@ -187,8 +187,8 @@
             android:text="@string/read_preview"
             android:textColor="@color/design_default_color_background"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <TextView
@@ -204,18 +204,18 @@
             android:textColor="@color/design_default_color_background"
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/preview_tv"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline3" />
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_center" />
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
+            android:id="@+id/guideline_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="16dp" />
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
+            android:id="@+id/guideline_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -224,7 +224,7 @@
             app:layout_constraintGuide_end="16dp" />
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
+            android:id="@+id/guideline_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -239,20 +239,22 @@
             android:textColor="@color/design_default_color_on_secondary"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/preview_tv" />
 
     <at.blogc.android.views.ExpandableTextView
             android:id="@+id/expendable_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="5"
             android:text="@string/empty_generic_placeholder"
             app:animation_duration="750"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
@@ -267,7 +269,17 @@
             android:padding="4dp"
             android:text="@string/show_more"
             android:textColor="@color/design_default_color_background"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintTop_toBottomOf="@+id/expendable_text_view" />
+
+    <View
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="@+id/showmore_tv"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toTopOf="@+id/showmore_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

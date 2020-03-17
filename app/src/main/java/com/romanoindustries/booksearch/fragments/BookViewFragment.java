@@ -126,6 +126,7 @@ public class BookViewFragment extends Fragment {
         descriptionExpendable = view.findViewById(R.id.expendable_text_view);
         descriptionExpendable.setInterpolator(new OvershootInterpolator());
 
+
         showMoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,6 +134,5 @@ public class BookViewFragment extends Fragment {
                 descriptionExpendable.toggle();
             }
         });
-
     }
 }
