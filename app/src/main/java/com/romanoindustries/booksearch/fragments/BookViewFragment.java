@@ -36,6 +36,7 @@ public class BookViewFragment extends Fragment {
     private TextView numReviewsTv;
     private TextView numPagesTv;
     private TextView reviewsLabelTv;
+    private Book currentlyViewedBook;
 
     public BookViewFragment() {
         // Required empty public constructor
@@ -56,6 +57,7 @@ public class BookViewFragment extends Fragment {
                     //
                 } else {
                     displayBook(book);
+                    currentlyViewedBook = book;
                 }
             }
         });
