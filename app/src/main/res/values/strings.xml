@@ -14,6 +14,8 @@
     <string name="save_book">Save</string>
     <string name="read_preview">Preview</string>
     <string name="about">About:</string>
+    <string name="show_more">…show more</string>
+    <string name="show_less">…show less</string>
     
 <!--    used in search fragment-->
     <string name="search_everywhere">Everywhere</string>

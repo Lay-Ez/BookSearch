@@ -1,12 +1,12 @@
 package com.romanoindustries.booksearch.fragments;
 
 
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +25,8 @@ import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
+import at.blogc.android.views.ExpandableTextView;
+
 
 public class BookViewFragment extends Fragment {
     private static final String TAG = "BookViewFragment";
@@ -39,7 +41,8 @@ public class BookViewFragment extends Fragment {
     private TextView numPagesTv;
     private TextView reviewsLabelTv;
     private Book currentlyViewedBook;
-    private TextView descriptionTv;
+    private ExpandableTextView descriptionExpendable;
+    private TextView showMoreTv;
 
     public BookViewFragment() {
         // Required empty public constructor
@@ -95,7 +98,7 @@ public class BookViewFragment extends Fragment {
             reviewsLabelTv.setText(getString(R.string.reviews));
         }
 
-        descriptionTv.setText(Html.fromHtml(volumeInfo.getDescription(), Html.FROM_HTML_MODE_LEGACY));
+        descriptionExpendable.setText(Html.fromHtml(volumeInfo.getDescription(), Html.FROM_HTML_MODE_LEGACY));
     }
 
     private void loadThumbnail(String url) {
@@ -118,19 +121,18 @@ public class BookViewFragment extends Fragment {
         numReviewsTv = view.findViewById(R.id.num_reviews_tv);
         numPagesTv = view.findViewById(R.id.num_pages_tv);
         reviewsLabelTv = view.findViewById(R.id.reviews_label_tv);
-        descriptionTv = view.findViewById(R.id.description_tv);
-        descriptionTv.setOnClickListener(new View.OnClickListener() {
+        showMoreTv = view.findViewById(R.id.showmore_tv);
+
+        descriptionExpendable = view.findViewById(R.id.expendable_text_view);
+        descriptionExpendable.setInterpolator(new OvershootInterpolator());
+
+        showMoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cycleTextViewExpansion((TextView) v);
+                showMoreTv.setText(descriptionExpendable.isExpanded() ? getString(R.string.show_more) : getString(R.string.show_less));
+                descriptionExpendable.toggle();
             }
         });
-    }
 
-    private void cycleTextViewExpansion(TextView tv){
-        int collapsedMaxLines = 5;
-        ObjectAnimator animation = ObjectAnimator.ofInt(tv, "maxLines",
-                tv.getMaxLines() == collapsedMaxLines? tv.getLineCount() : collapsedMaxLines);
-        animation.setDuration(200).start();
     }
 }
