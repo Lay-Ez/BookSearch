@@ -11,6 +11,8 @@
     <string name="reviews">Reviews</string>
     <string name="review">Review</string>
     <string name="empty_generic_placeholder">--</string>
+    <string name="save_book">Save</string>
+    <string name="read_preview">Preview</string>
     
 <!--    used in search fragment-->
     <string name="search_everywhere">Everywhere</string>

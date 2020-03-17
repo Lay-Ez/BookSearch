@@ -16,7 +16,6 @@ public class Book {
     @ColumnInfo (name = "self_link")
     @NonNull
     private String selfLink;
-    private Boolean isSaved;
     private String personalNote;
 
     public Book(VolumeInfo volumeInfo, String selfLink) {
@@ -30,14 +29,6 @@ public class Book {
 
     public String getSelfLink() {
         return selfLink;
-    }
-
-    public Boolean getSaved() {
-        return isSaved;
-    }
-
-    public void setSaved(Boolean saved) {
-        isSaved = saved;
     }
 
     public String getPersonalNote() {

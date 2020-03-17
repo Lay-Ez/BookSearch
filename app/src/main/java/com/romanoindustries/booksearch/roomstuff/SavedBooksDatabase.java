@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 
 import com.romanoindustries.booksearch.bookmodel.Book;
 
-@Database(entities = {Book.class}, version = 3)
+@Database(entities = {Book.class}, version = 4)
 @TypeConverters({RoomConverters.class})
 public abstract class SavedBooksDatabase extends RoomDatabase {
 
