@@ -34,6 +34,10 @@ public class BookViewActivityViewModel extends ViewModel {
         return bookMutableLiveData;
     }
 
+    public void setBookMutableLiveData(Book book) {
+        bookMutableLiveData.setValue(book);
+    }
+
     public LiveData<Boolean> getIsLoading() {
         return isLoading;
     }

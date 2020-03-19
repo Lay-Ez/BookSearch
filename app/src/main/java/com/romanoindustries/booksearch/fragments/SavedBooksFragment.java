@@ -28,7 +28,7 @@ import java.util.List;
 public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookListener {
     private static final String TAG = "SavedBooksFragment";
 
-    private SavedBooksViewModel booksViewModel;
+    private SavedBooksViewModel savedBooksViewModel;
     private RecyclerView savedBooksRecyclerView;
     private BooksAdapter booksAdapter;
 
@@ -41,7 +41,7 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
 
         View view = inflater.inflate(R.layout.fragment_saved_books, container, false);
 
-        booksViewModel = new ViewModelProvider
+        savedBooksViewModel = new ViewModelProvider
                 .AndroidViewModelFactory(getActivity().getApplication())
                 .create(SavedBooksViewModel.class);
 
@@ -51,7 +51,7 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
         savedBooksRecyclerView.setLayoutManager(layoutManager);
         savedBooksRecyclerView.setAdapter(booksAdapter);
 
-        booksViewModel.getSavedBooks().observe(this, new Observer<List<Book>>() {
+        savedBooksViewModel.getSavedBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
                 booksAdapter.updateBooks(books);
@@ -64,8 +64,10 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
     @Override
     public void onBookClick(int position, ImageView imageForTransition) {
         Intent viewBookIntent = new Intent(getContext(), BookViewActivity.class);
-        String bookUrl = booksViewModel.getSavedBooks().getValue().get(position).getSelfLink();
+        String bookUrl = savedBooksViewModel.getSavedBooks().getValue().get(position).getSelfLink();
         viewBookIntent.putExtra(Intent.EXTRA_CONTENT_QUERY, bookUrl);
+        viewBookIntent.putExtra(Intent.EXTRA_FROM_STORAGE, true);
+        viewBookIntent.putExtra(Intent.EXTRA_INDEX, position);
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 imageForTransition, ViewCompat.getTransitionName(imageForTransition));

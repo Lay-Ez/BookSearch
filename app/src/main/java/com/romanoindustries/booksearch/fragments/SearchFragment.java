@@ -189,6 +189,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         Intent viewBookIntent = new Intent(getContext(), BookViewActivity.class);
         String bookUrl = searchFragmentViewModel.getBooks().getValue().get(position).getSelfLink();
         viewBookIntent.putExtra(Intent.EXTRA_CONTENT_QUERY, bookUrl);
+        viewBookIntent.putExtra(Intent.EXTRA_FROM_STORAGE, false);
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 imageForTransition, ViewCompat.getTransitionName(imageForTransition));

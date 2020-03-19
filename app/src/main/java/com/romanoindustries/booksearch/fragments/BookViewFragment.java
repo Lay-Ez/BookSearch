@@ -25,6 +25,7 @@ import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
 import com.romanoindustries.booksearch.imagetransformation.RoundedCornersTransformation;
 import com.romanoindustries.booksearch.networkutils.BookNetworkUtils;
 import com.romanoindustries.booksearch.viewmodels.BookViewActivityViewModel;
+import com.romanoindustries.booksearch.viewmodels.SavedBooksViewModel;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -160,7 +161,9 @@ public class BookViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 animateViewFade(v);
-
+                SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
+                        .create(SavedBooksViewModel.class);
+                viewModel.insert(currentlyViewedBook);
             }
         });
 
