@@ -184,6 +184,7 @@ public class BookViewFragment extends Fragment {
                 SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
                         .create(SavedBooksViewModel.class);
                 viewModel.insert(currentlyViewedBook);
+                saveButtonTv.setText(R.string.saved);
             }
         });
 
@@ -216,7 +217,7 @@ public class BookViewFragment extends Fragment {
                     String currentlyViewedBookUrl = book.getSelfLink();
                     for (Book book: books) {
                         if (book.getSelfLink().equals(currentlyViewedBookUrl)) {
-
+                            saveButtonTv.setText(R.string.saved);
                         }
                     }
                 }

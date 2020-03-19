@@ -60,7 +60,7 @@ public class BookViewActivity extends AppCompatActivity {
                             return;
                         }
                     }
-                    Log.e(TAG, "onChanged: couldn't load th book from db. Url=" + bookUrl);
+                    Log.e(TAG, "onChanged: couldn't load the book from db. Url=" + bookUrl);
                 }
             }
         });
