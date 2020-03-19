@@ -1,6 +1,11 @@
 package com.romanoindustries.booksearch.fragments;
 
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -43,6 +48,8 @@ public class BookViewFragment extends Fragment {
     private Book currentlyViewedBook;
     private ExpandableTextView descriptionExpendable;
     private TextView showMoreTv;
+    private TextView previewButtonTv;
+    private TextView saveButtonTv;
 
     public BookViewFragment() {
         // Required empty public constructor
@@ -130,9 +137,49 @@ public class BookViewFragment extends Fragment {
         showMoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                animateViewFade(v);
                 showMoreTv.setText(descriptionExpendable.isExpanded() ? getString(R.string.show_more) : getString(R.string.show_less));
                 descriptionExpendable.toggle();
             }
         });
+
+        previewButtonTv = view.findViewById(R.id.preview_tv);
+        saveButtonTv = view.findViewById(R.id.save_book_tv);
+
+        previewButtonTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animateViewFade(v);
+                String previewUrl = currentlyViewedBook.getVolumeInfo().getPreviewUrl();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(previewUrl));
+                startActivity(browserIntent);
+            }
+        });
+
+        saveButtonTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animateViewFade(v);
+
+            }
+        });
+
+    }
+
+    private void animateViewFade(final View view) {
+        int colorFrom = getContext().getColor(R.color.color_buttons);
+        int colorTo = getContext().getColor(R.color.color_when_button_pressed);
+        final ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        animator.setDuration(100);
+        animator.setRepeatMode(ValueAnimator.REVERSE);
+        animator.setRepeatCount(1);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int animatedValue = (int) animation.getAnimatedValue();
+                view.setBackgroundTintList(ColorStateList.valueOf(animatedValue));
+            }
+        });
+        animator.start();
     }
 }

@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+
+<!--    book view fragment-->
+    <color name="color_buttons">#008577</color>
+    <color name="color_when_button_pressed">#00B19E</color>
 </resources>
