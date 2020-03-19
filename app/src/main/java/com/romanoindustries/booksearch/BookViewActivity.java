@@ -2,6 +2,7 @@ package com.romanoindustries.booksearch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -48,13 +49,18 @@ public class BookViewActivity extends AppCompatActivity {
                 new ViewModelProvider.AndroidViewModelFactory(getApplication()).
                         create(SavedBooksViewModel.class);
 
-        final int positionInTheViewModel = getIntent().getIntExtra(Intent.EXTRA_INDEX, 0);
+        final String bookUrl = getIntent().getStringExtra(Intent.EXTRA_CONTENT_QUERY);
         savedBooksViewModel.getSavedBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                if (books != null) {
-                    Book book = books.get(positionInTheViewModel);
-                    viewBookViewModel.setBookMutableLiveData(book);
+                if (books != null && !books.isEmpty()) {
+                    for (Book book : books) {
+                        if (book.getSelfLink().equals(bookUrl)) {
+                            viewBookViewModel.setBookMutableLiveData(book);
+                            return;
+                        }
+                    }
+                    Log.e(TAG, "onChanged: couldn't load th book from db. Url=" + bookUrl);
                 }
             }
         });

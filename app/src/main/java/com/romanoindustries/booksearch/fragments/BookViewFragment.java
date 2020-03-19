@@ -39,6 +39,7 @@ public class BookViewFragment extends Fragment {
     
     private BookViewActivityViewModel viewModel;
     private Book currentlyViewedBook;
+    private boolean deleteBookOnExit = false;
 
     private TextView titleTV;
     private ImageView thumbnailIM;
@@ -229,11 +230,19 @@ public class BookViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 animateViewFade(v);
-                SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
-                        .create(SavedBooksViewModel.class);
-                viewModel.delete(currentlyViewedBook);
-                getActivity().onBackPressed();
+                saveButtonTv.setText(R.string.removed);
+                deleteBookOnExit = true;
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (deleteBookOnExit) {
+            SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
+                    .create(SavedBooksViewModel.class);
+            viewModel.delete(currentlyViewedBook);
+        }
     }
 }
