@@ -36,7 +36,9 @@ import at.blogc.android.views.ExpandableTextView;
 
 public class BookViewFragment extends Fragment {
     private static final String TAG = "BookViewFragment";
+    
     private BookViewActivityViewModel viewModel;
+    private Book currentlyViewedBook;
 
     private TextView titleTV;
     private ImageView thumbnailIM;
@@ -46,7 +48,6 @@ public class BookViewFragment extends Fragment {
     private TextView numReviewsTv;
     private TextView numPagesTv;
     private TextView reviewsLabelTv;
-    private Book currentlyViewedBook;
     private ExpandableTextView descriptionExpendable;
     private TextView showMoreTv;
     private TextView previewButtonTv;
@@ -64,6 +65,8 @@ public class BookViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_book_view, container, false);
         initViews(view);
 
+        final boolean startedFromSavedFragment = getActivity().getIntent().getBooleanExtra(Intent.EXTRA_FROM_STORAGE, false);
+
         viewModel = new ViewModelProvider(requireActivity()).get(BookViewActivityViewModel.class);
         viewModel.getBook().observe(getViewLifecycleOwner(), new Observer<Book>() {
             @Override
@@ -73,6 +76,9 @@ public class BookViewFragment extends Fragment {
                 } else {
                     displayBook(book);
                     currentlyViewedBook = book;
+                    if (startedFromSavedFragment) {
+                        addRemoveOption();
+                    }
                 }
             }
         });
@@ -157,16 +163,6 @@ public class BookViewFragment extends Fragment {
         showMoreTv.setOnClickListener(clickListenerForExpandableSummary);
         descriptionExpendable.setOnClickListener(clickListenerForExpandableSummary);
 
-
-//        showMoreTv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                animateViewFade(v);
-//                showMoreTv.setText(descriptionExpendable.isExpanded() ? getString(R.string.show_more) : getString(R.string.show_less));
-//                descriptionExpendable.toggle();
-//            }
-//        });
-
         previewButtonTv = view.findViewById(R.id.preview_tv);
         saveButtonTv = view.findViewById(R.id.save_book_tv);
 
@@ -207,5 +203,37 @@ public class BookViewFragment extends Fragment {
             }
         });
         animator.start();
+    }
+
+    private void checkIfBookSaved(final Book book) {
+        SavedBooksViewModel savedBooksViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
+                .create(SavedBooksViewModel.class);
+        savedBooksViewModel.getSavedBooks().observe(this, new Observer<List<Book>>() {
+            @Override
+            public void onChanged(List<Book> books) {
+                if (books != null && !books.isEmpty()) {
+                    String currentlyViewedBookUrl = book.getSelfLink();
+                    for (Book book: books) {
+                        if (book.getSelfLink().equals(currentlyViewedBookUrl)) {
+
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void addRemoveOption() {
+        saveButtonTv.setText(R.string.remove);
+        saveButtonTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animateViewFade(v);
+                SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
+                        .create(SavedBooksViewModel.class);
+                viewModel.delete(currentlyViewedBook);
+                getActivity().onBackPressed();
+            }
+        });
     }
 }

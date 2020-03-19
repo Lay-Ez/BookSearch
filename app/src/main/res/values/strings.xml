@@ -12,6 +12,8 @@
     <string name="review">Review</string>
     <string name="empty_generic_placeholder">--</string>
     <string name="save_book">Save</string>
+    <string name="saved">Saved</string>
+    <string name="remove">Remove</string>
     <string name="read_preview">Preview</string>
     <string name="about">About:</string>
     <string name="show_more">show more</string>
