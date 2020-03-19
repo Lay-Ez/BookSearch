@@ -145,15 +145,27 @@ public class BookViewFragment extends Fragment {
         descriptionExpendable = view.findViewById(R.id.expendable_text_view);
         descriptionExpendable.setInterpolator(new AccelerateDecelerateInterpolator());
 
-
-        showMoreTv.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener clickListenerForExpandableSummary = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animateViewFade(v);
+                animateViewFade(showMoreTv);
                 showMoreTv.setText(descriptionExpendable.isExpanded() ? getString(R.string.show_more) : getString(R.string.show_less));
                 descriptionExpendable.toggle();
             }
-        });
+        };
+
+        showMoreTv.setOnClickListener(clickListenerForExpandableSummary);
+        descriptionExpendable.setOnClickListener(clickListenerForExpandableSummary);
+
+
+//        showMoreTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                animateViewFade(v);
+//                showMoreTv.setText(descriptionExpendable.isExpanded() ? getString(R.string.show_more) : getString(R.string.show_less));
+//                descriptionExpendable.toggle();
+//            }
+//        });
 
         previewButtonTv = view.findViewById(R.id.preview_tv);
         saveButtonTv = view.findViewById(R.id.save_book_tv);
