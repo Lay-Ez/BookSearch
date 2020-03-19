@@ -11,7 +11,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,6 +51,7 @@ public class BookViewFragment extends Fragment {
     private TextView showMoreTv;
     private TextView previewButtonTv;
     private TextView saveButtonTv;
+    private TextView categoriesTv;
 
     public BookViewFragment() {
         // Required empty public constructor
@@ -94,6 +95,15 @@ public class BookViewFragment extends Fragment {
             }
         }
 
+        List<String> categories = volumeInfo.getCategories();
+        for (int i = 0; i < categories.size(); i++) {
+            if (i == categories.size() - 1) {
+                categoriesTv.append(categories.get(i));
+            } else {
+                categoriesTv.append(categories.get(i) + "\n");
+            }
+        }
+
         publisherTV.setText(volumeInfo.getPublisher());
         ratingTv.setText(String.valueOf(volumeInfo.getAvgRating()));
         numPagesTv.setText(String.valueOf(volumeInfo.getPageCount()));
@@ -130,9 +140,10 @@ public class BookViewFragment extends Fragment {
         numPagesTv = view.findViewById(R.id.num_pages_tv);
         reviewsLabelTv = view.findViewById(R.id.reviews_label_tv);
         showMoreTv = view.findViewById(R.id.showmore_tv);
+        categoriesTv = view.findViewById(R.id.categories_tv);
 
         descriptionExpendable = view.findViewById(R.id.expendable_text_view);
-        descriptionExpendable.setInterpolator(new OvershootInterpolator());
+        descriptionExpendable.setInterpolator(new AccelerateDecelerateInterpolator());
 
 
         showMoreTv.setOnClickListener(new View.OnClickListener() {
