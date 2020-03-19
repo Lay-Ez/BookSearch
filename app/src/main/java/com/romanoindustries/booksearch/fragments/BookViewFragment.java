@@ -79,6 +79,8 @@ public class BookViewFragment extends Fragment {
                     currentlyViewedBook = book;
                     if (startedFromSavedFragment) {
                         addRemoveOption();
+                    } else {
+                        checkIfBookSaved(book);
                     }
                 }
             }
@@ -217,6 +219,7 @@ public class BookViewFragment extends Fragment {
                     String currentlyViewedBookUrl = book.getSelfLink();
                     for (Book book: books) {
                         if (book.getSelfLink().equals(currentlyViewedBookUrl)) {
+                            // change the UI slightly if book isn't viewed from saved list but is IN the saved list
                             saveButtonTv.setText(R.string.saved);
                         }
                     }
