@@ -148,7 +148,7 @@ public class BookViewFragment extends Fragment {
         numReviewsTv = view.findViewById(R.id.num_reviews_tv);
         numPagesTv = view.findViewById(R.id.num_pages_tv);
         reviewsLabelTv = view.findViewById(R.id.reviews_label_tv);
-        showMoreTv = view.findViewById(R.id.showmore_tv);
+        showMoreTv = view.findViewById(R.id.showmore_btn);
         categoriesTv = view.findViewById(R.id.categories_tv);
 
         descriptionExpendable = view.findViewById(R.id.expendable_text_view);
@@ -166,8 +166,8 @@ public class BookViewFragment extends Fragment {
         showMoreTv.setOnClickListener(clickListenerForExpandableSummary);
         descriptionExpendable.setOnClickListener(clickListenerForExpandableSummary);
 
-        previewButtonTv = view.findViewById(R.id.preview_tv);
-        saveButtonTv = view.findViewById(R.id.save_book_tv);
+        previewButtonTv = view.findViewById(R.id.preview_btn);
+        saveButtonTv = view.findViewById(R.id.save_book_button);
 
         previewButtonTv.setOnClickListener(new View.OnClickListener() {
             @Override

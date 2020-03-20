@@ -175,7 +175,7 @@
             app:layout_constraintTop_toBottomOf="@id/barrier3" />
 
     <TextView
-            android:id="@+id/preview_tv"
+            android:id="@+id/preview_btn"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="16dp"
@@ -193,7 +193,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <TextView
-            android:id="@+id/save_book_tv"
+            android:id="@+id/save_book_button"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
@@ -205,7 +205,7 @@
             android:text="@string/save_book"
             android:textColor="@color/design_default_color_background"
             android:textSize="18sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/preview_tv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/preview_btn"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_center" />
 
@@ -242,7 +242,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@+id/preview_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/preview_btn" />
 
     <at.blogc.android.views.ExpandableTextView
             android:id="@+id/expendable_text_view"
@@ -260,7 +260,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-            android:id="@+id/showmore_tv"
+            android:id="@+id/showmore_btn"
             android:layout_width="100dp"
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
@@ -280,10 +280,10 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="@+id/showmore_tv"
+            app:layout_constraintBottom_toBottomOf="@+id/showmore_btn"
             app:layout_constraintEnd_toEndOf="@id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toTopOf="@+id/showmore_tv" />
+            app:layout_constraintTop_toTopOf="@+id/showmore_btn" />
 
     <TextView
             android:id="@+id/categories_tv"
@@ -316,6 +316,6 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@+id/showmore_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/showmore_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
