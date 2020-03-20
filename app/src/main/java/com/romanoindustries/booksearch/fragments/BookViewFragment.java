@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +29,8 @@ import com.romanoindustries.booksearch.viewmodels.SavedBooksViewModel;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import at.blogc.android.views.ExpandableTextView;
@@ -53,6 +57,13 @@ public class BookViewFragment extends Fragment {
     private Button saveButtonTv;
     private TextView categoriesTv;
 
+    //hide these if book isn't viewed from saved list
+    private TextView noteLabel;
+    private TextView notesTv;
+    private ImageButton editNoteBtn;
+
+    private boolean startedFromSavedFragment;
+
     public BookViewFragment() {
         // Required empty public constructor
     }
@@ -62,10 +73,9 @@ public class BookViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_view, container, false);
+        startedFromSavedFragment = getActivity().getIntent().getBooleanExtra(Intent.EXTRA_FROM_STORAGE, false);
+
         initViews(view);
-
-        final boolean startedFromSavedFragment = getActivity().getIntent().getBooleanExtra(Intent.EXTRA_FROM_STORAGE, false);
-
         viewModel = new ViewModelProvider(requireActivity()).get(BookViewActivityViewModel.class);
         viewModel.getBook().observe(getViewLifecycleOwner(), new Observer<Book>() {
             @Override
@@ -88,6 +98,11 @@ public class BookViewFragment extends Fragment {
     }
 
     private void displayBook(Book book) {
+
+        if (getActivity().getIntent().getBooleanExtra(Intent.EXTRA_FROM_STORAGE, false)) {
+            displaySavedBookElements(book);
+        }
+
         VolumeInfo volumeInfo = book.getVolumeInfo();
 
         loadThumbnail(volumeInfo.getThumbnailURL());
@@ -124,6 +139,8 @@ public class BookViewFragment extends Fragment {
         }
 
         descriptionExpendable.setText(Html.fromHtml(volumeInfo.getDescription(), Html.FROM_HTML_MODE_LEGACY));
+
+
     }
 
     private void loadThumbnail(String url) {
@@ -185,6 +202,8 @@ public class BookViewFragment extends Fragment {
                 saveButtonTv.setEnabled(false);
             }
         });
+
+        initOptionalViews(view);
     }
 
     private void checkIfBookSaved(final Book book) {
@@ -205,6 +224,25 @@ public class BookViewFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void displaySavedBookElements(Book book) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        String dateString = dateFormat.format(new Date(book.getSavedTime()));
+
+    }
+
+    private void initOptionalViews(View view) {
+        Log.d(TAG, "initOptionalViews: startedFromSaved=" + startedFromSavedFragment);
+        noteLabel = view.findViewById(R.id.note_label);
+        notesTv = view.findViewById(R.id.notes_tv);
+        editNoteBtn = view.findViewById(R.id.edit_note_btn);
+
+        if (!startedFromSavedFragment) {
+            noteLabel.setVisibility(View.GONE);
+            notesTv.setVisibility(View.GONE);
+            editNoteBtn.setVisibility(View.GONE);
+        }
     }
 
     private void addRemoveOption() {

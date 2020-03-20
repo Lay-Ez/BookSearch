@@ -17,6 +17,7 @@ public class Book {
     @NonNull
     private String selfLink;
     private String personalNote;
+    private Long savedTime;
 
     public Book(VolumeInfo volumeInfo, String selfLink) {
         this.volumeInfo = volumeInfo;
@@ -37,5 +38,13 @@ public class Book {
 
     public void setPersonalNote(String personalNote) {
         this.personalNote = personalNote;
+    }
+
+    public Long getSavedTime() {
+        return savedTime;
+    }
+
+    public void setSavedTime(Long savedTime) {
+        this.savedTime = savedTime;
     }
 }

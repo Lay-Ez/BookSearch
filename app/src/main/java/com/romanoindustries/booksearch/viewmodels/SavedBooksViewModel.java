@@ -23,6 +23,9 @@ public class SavedBooksViewModel extends AndroidViewModel {
     }
 
     public void insert(Book book) {
+        long currentTime = System.currentTimeMillis();
+        book.setSavedTime(currentTime);
+        book.setPersonalNote("");
         repository.insertBook(book);
     }
 
