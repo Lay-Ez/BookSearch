@@ -1,10 +1,7 @@
 package com.romanoindustries.booksearch.fragments;
 
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -12,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,8 +49,8 @@ public class BookViewFragment extends Fragment {
     private TextView reviewsLabelTv;
     private ExpandableTextView descriptionExpendable;
     private TextView showMoreTv;
-    private TextView previewButtonTv;
-    private TextView saveButtonTv;
+    private Button previewButtonTv;
+    private Button saveButtonTv;
     private TextView categoriesTv;
 
     public BookViewFragment() {
@@ -157,7 +155,6 @@ public class BookViewFragment extends Fragment {
         View.OnClickListener clickListenerForExpandableSummary = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animateViewFade(showMoreTv);
                 showMoreTv.setText(descriptionExpendable.isExpanded() ? getString(R.string.show_more) : getString(R.string.show_less));
                 descriptionExpendable.toggle();
             }
@@ -172,7 +169,6 @@ public class BookViewFragment extends Fragment {
         previewButtonTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animateViewFade(v);
                 String previewUrl = currentlyViewedBook.getVolumeInfo().getPreviewUrl();
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(previewUrl));
                 startActivity(browserIntent);
@@ -182,31 +178,13 @@ public class BookViewFragment extends Fragment {
         saveButtonTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animateViewFade(v);
                 SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
                         .create(SavedBooksViewModel.class);
                 viewModel.insert(currentlyViewedBook);
                 saveButtonTv.setText(R.string.saved);
+                saveButtonTv.setEnabled(false);
             }
         });
-
-    }
-
-    private void animateViewFade(final View view) {
-        int colorFrom = getContext().getColor(R.color.color_buttons);
-        int colorTo = getContext().getColor(R.color.color_when_button_pressed);
-        final ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        animator.setDuration(100);
-        animator.setRepeatMode(ValueAnimator.REVERSE);
-        animator.setRepeatCount(1);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int animatedValue = (int) animation.getAnimatedValue();
-                view.setBackgroundTintList(ColorStateList.valueOf(animatedValue));
-            }
-        });
-        animator.start();
     }
 
     private void checkIfBookSaved(final Book book) {
@@ -221,6 +199,7 @@ public class BookViewFragment extends Fragment {
                         if (book.getSelfLink().equals(currentlyViewedBookUrl)) {
                             // change the UI slightly if book isn't viewed from saved list but is IN the saved list
                             saveButtonTv.setText(R.string.saved);
+                            saveButtonTv.setEnabled(false);
                         }
                     }
                 }
@@ -233,8 +212,8 @@ public class BookViewFragment extends Fragment {
         saveButtonTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animateViewFade(v);
                 saveButtonTv.setText(R.string.removed);
+                saveButtonTv.setEnabled(false);
                 deleteBookOnExit = true;
             }
         });

@@ -174,35 +174,35 @@
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@id/barrier3" />
 
-    <TextView
+    <Button
             android:id="@+id/preview_btn"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/background_for_savebutton"
-            android:backgroundTint="@color/color_buttons"
+            android:background="@drawable/button_custom"
             android:elevation="2dp"
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/read_preview"
+            android:textAllCaps="false"
             android:textColor="@color/design_default_color_background"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline_center"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-    <TextView
+    <Button
             android:id="@+id/save_book_button"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:background="@drawable/background_for_savebutton"
-            android:backgroundTint="@color/color_buttons"
+            android:background="@drawable/button_custom"
             android:elevation="2dp"
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/save_book"
+            android:textAllCaps="false"
             android:textColor="@color/design_default_color_background"
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/preview_btn"
@@ -259,18 +259,18 @@
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <TextView
+    <Button
             android:id="@+id/showmore_btn"
             android:layout_width="100dp"
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/background_for_savebutton"
-            android:backgroundTint="@color/color_buttons"
+            android:background="@drawable/button_custom"
             android:elevation="2dp"
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/show_more"
+            android:textAllCaps="false"
             android:textColor="@color/design_default_color_background"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintTop_toBottomOf="@+id/expendable_text_view" />
