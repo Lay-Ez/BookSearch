@@ -6,6 +6,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <TextView
+            android:id="@+id/notes_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/background_frame_for_categories"
+            android:inputType="textMultiLine"
+            android:outlineProvider="bounds"
+            android:paddingStart="8dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toTopOf="@+id/note_label"
+            tools:text="This is a really great book yall" />
+
+    <TextView
+            android:id="@+id/note_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:colorBackground"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:text="@string/notes"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/categories_tv" />
+
     <ImageView
             android:id="@+id/thumbnail_iv"
             android:layout_width="100dp"
@@ -261,6 +295,7 @@
 
     <Button
             android:id="@+id/showmore_btn"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="100dp"
             android:layout_height="32dp"
             android:layout_marginTop="8dp"
@@ -317,5 +352,17 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/showmore_btn" />
+
+    <ImageButton
+            android:id="@+id/edit_note_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/button_custom"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/notes_tv"
+            app:layout_constraintEnd_toEndOf="@+id/notes_tv"
+            app:layout_constraintTop_toBottomOf="@+id/notes_tv"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
