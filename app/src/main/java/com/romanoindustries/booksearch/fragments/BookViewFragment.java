@@ -99,9 +99,7 @@ public class BookViewFragment extends Fragment {
 
     private void displayBook(Book book) {
 
-        if (getActivity().getIntent().getBooleanExtra(Intent.EXTRA_FROM_STORAGE, false)) {
-            displaySavedBookElements(book);
-        }
+
 
         VolumeInfo volumeInfo = book.getVolumeInfo();
 
@@ -139,8 +137,17 @@ public class BookViewFragment extends Fragment {
         }
 
         descriptionExpendable.setText(Html.fromHtml(volumeInfo.getDescription(), Html.FROM_HTML_MODE_LEGACY));
+        displayOptionalSaved(book);
+    }
 
-
+    private void displayOptionalSaved(Book book) {
+        if (!startedFromSavedFragment) {
+            return;
+        }
+        String note = book.getPersonalNote();
+        if (!note.isEmpty()) {
+            notesTv.setText(note);
+        }
     }
 
     private void loadThumbnail(String url) {
@@ -195,9 +202,7 @@ public class BookViewFragment extends Fragment {
         saveButtonTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
-                        .create(SavedBooksViewModel.class);
-                viewModel.insert(currentlyViewedBook);
+                saveBook(currentlyViewedBook);
                 saveButtonTv.setText(R.string.saved);
                 saveButtonTv.setEnabled(false);
             }
@@ -226,12 +231,6 @@ public class BookViewFragment extends Fragment {
         });
     }
 
-    private void displaySavedBookElements(Book book) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
-        String dateString = dateFormat.format(new Date(book.getSavedTime()));
-
-    }
-
     private void initOptionalViews(View view) {
         Log.d(TAG, "initOptionalViews: startedFromSaved=" + startedFromSavedFragment);
         noteLabel = view.findViewById(R.id.note_label);
@@ -255,6 +254,18 @@ public class BookViewFragment extends Fragment {
                 deleteBookOnExit = true;
             }
         });
+    }
+
+    private void saveBook(Book book) {
+        SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
+                .create(SavedBooksViewModel.class);
+
+        long currentTime = System.currentTimeMillis();
+        book.setSavedTime(currentTime);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        String dateString = dateFormat.format(new Date(book.getSavedTime()));
+        book.setPersonalNote(getString(R.string.note_stub, dateString));
+        viewModel.insert(currentlyViewedBook);
     }
 
     @Override

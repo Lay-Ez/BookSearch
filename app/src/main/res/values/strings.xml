@@ -21,6 +21,8 @@
     <string name="show_less">show less</string>
     <string name="categories">Categories</string>
     <string name="notes">Your Note</string>
+
+    <string name="note_stub">---You saved this book on %1$s---</string>
 <!--    used in search fragment-->
     <string name="search_everywhere">Everywhere</string>
     <string name="search_by_title">By Title</string>
