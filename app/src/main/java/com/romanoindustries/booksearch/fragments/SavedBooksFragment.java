@@ -23,6 +23,7 @@ import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.viewmodels.SavedBooksViewModel;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookListener {
@@ -54,7 +55,15 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
         savedBooksViewModel.getSavedBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                booksAdapter.updateBooks(books);
+                if (books != null) {
+                    books.sort(new Comparator<Book>() {
+                        @Override
+                        public int compare(Book book1, Book book2) {
+                            return  (book1.getSavedTime() - book2.getSavedTime() > 0) ? -1 : 1;
+                        }
+                    });
+                    booksAdapter.updateBooks(books);
+                }
             }
         });
 

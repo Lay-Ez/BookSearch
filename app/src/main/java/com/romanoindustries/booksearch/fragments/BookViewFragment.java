@@ -140,9 +140,7 @@ public class BookViewFragment extends Fragment {
             return;
         }
         String note = book.getPersonalNote();
-        if (!note.isEmpty()) {
-            notesTv.setText(note);
-        }
+        notesTv.setText(note);
 
         editNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override

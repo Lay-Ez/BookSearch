@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -58,6 +59,11 @@ public class EditNoteActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Toolbar toolbar = findViewById(R.id.note_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private void displayBook(Book book) {
@@ -108,5 +114,11 @@ public class EditNoteActivity extends AppCompatActivity {
         noteTextInput = findViewById(R.id.note_text_input);
         saveBtn = findViewById(R.id.save_note_btn);
         cancelBtn = findViewById(R.id.cancel_note_btn);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
