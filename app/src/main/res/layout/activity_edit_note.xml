@@ -6,6 +6,57 @@
         android:layout_height="match_parent"
         tools:context=".EditNoteActivity">
 
+    <ImageView
+            android:id="@+id/note_thumbnail_iv"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/image_background"
+            android:elevation="2dp"
+            android:scaleType="fitXY"
+            android:transitionName="book_thumb_transition"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:src="@color/colorAccent" />
+
+    <TextView
+            android:id="@+id/note_author_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/note_title_tv"
+            app:layout_constraintStart_toStartOf="@+id/note_title_tv"
+            app:layout_constraintTop_toBottomOf="@+id/note_title_tv"
+            tools:text="Eric Berne" />
+
+    <TextView
+            android:id="@+id/note_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:lineSpacingMultiplier="@dimen/material_emphasis_high_type"
+            android:textColor="@android:color/background_dark"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/note_thumbnail_iv"
+            app:layout_constraintTop_toTopOf="@id/note_thumbnail_iv"
+            tools:text="What Do You Say After You Say Hello" />
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/design_default_color_background" />
+
     <Button
             android:id="@+id/cancel_note_btn"
             android:layout_width="0dp"
@@ -47,16 +98,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/background_frame_for_categories"
             android:padding="4dp"
             app:boxStrokeColor="@null"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/note_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/edit_note_hint" />
@@ -84,4 +137,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="note_author_tv,note_thumbnail_iv"
+            tools:layout_editor_absoluteY="731dp" />
+
+    <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/edit_note_label"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/barrier" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
