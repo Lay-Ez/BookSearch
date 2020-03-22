@@ -203,8 +203,6 @@ public class BookViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveBook(currentlyViewedBook);
-                saveButtonTv.setText(R.string.saved);
-                saveButtonTv.setEnabled(false);
             }
         });
 
@@ -257,6 +255,9 @@ public class BookViewFragment extends Fragment {
     }
 
     private void saveBook(Book book) {
+        if (book == null) {
+            Log.d(TAG, "saveBook: attempting tos");
+        }
         SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
                 .create(SavedBooksViewModel.class);
 
@@ -266,6 +267,8 @@ public class BookViewFragment extends Fragment {
         String dateString = dateFormat.format(new Date(book.getSavedTime()));
         book.setPersonalNote(getString(R.string.note_stub, dateString));
         viewModel.insert(currentlyViewedBook);
+        saveButtonTv.setText(R.string.saved);
+        saveButtonTv.setEnabled(false);
     }
 
     @Override
