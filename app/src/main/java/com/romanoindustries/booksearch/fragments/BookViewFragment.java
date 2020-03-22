@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.romanoindustries.booksearch.EditNoteActivity;
 import com.romanoindustries.booksearch.R;
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
@@ -143,6 +144,14 @@ public class BookViewFragment extends Fragment {
         if (!note.isEmpty()) {
             notesTv.setText(note);
         }
+
+        editNoteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditNoteActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadThumbnail(String url) {

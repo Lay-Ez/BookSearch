@@ -4,7 +4,7 @@
     <string name="empty_list">No Books Found =(</string>
     <string name="search_hint">Search books…</string>
 
-<!--    used in fragment_book_view -->
+    <!--    used in fragment_book_view -->
     <string name="avg_rating">Rating</string>
     <string name="num_reviews">Reviews</string>
     <string name="num_pages">Pages</string>
@@ -23,11 +23,16 @@
     <string name="notes">Your Note</string>
 
     <string name="note_stub">---You saved this book on %1$s---</string>
-<!--    used in search fragment-->
+    <!--    used in search fragment-->
     <string name="search_everywhere">Everywhere</string>
     <string name="search_by_title">By Title</string>
     <string name="search_by_author">By Author</string>
     <string name="search_by_publisher">By Publisher</string>
     <string name="search_by_subject">By Subject</string>
+
+    <!--    used in edit note activity-->
+    <string name="edit_note_hint">Note</string>
+    <string name="save_note">Save</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
