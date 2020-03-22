@@ -32,14 +32,14 @@ import com.squareup.picasso.Transformation;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import at.blogc.android.views.ExpandableTextView;
 
 
 public class BookViewFragment extends Fragment {
     private static final String TAG = "BookViewFragment";
-    
-    private BookViewActivityViewModel viewModel;
+
     private Book currentlyViewedBook;
     private boolean deleteBookOnExit = false;
 
@@ -53,12 +53,9 @@ public class BookViewFragment extends Fragment {
     private TextView reviewsLabelTv;
     private ExpandableTextView descriptionExpendable;
     private TextView showMoreTv;
-    private Button previewButtonTv;
     private Button saveButtonTv;
     private TextView categoriesTv;
 
-    //hide these if book isn't viewed from saved list
-    private TextView noteLabel;
     private TextView notesTv;
     private ImageButton editNoteBtn;
 
@@ -73,16 +70,14 @@ public class BookViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_view, container, false);
-        startedFromSavedFragment = getActivity().getIntent().getBooleanExtra(Intent.EXTRA_FROM_STORAGE, false);
+        startedFromSavedFragment = Objects.requireNonNull(getActivity()).getIntent().getBooleanExtra(Intent.EXTRA_FROM_STORAGE, false);
 
         initViews(view);
-        viewModel = new ViewModelProvider(requireActivity()).get(BookViewActivityViewModel.class);
+        BookViewActivityViewModel viewModel = new ViewModelProvider(requireActivity()).get(BookViewActivityViewModel.class);
         viewModel.getBook().observe(getViewLifecycleOwner(), new Observer<Book>() {
             @Override
             public void onChanged(Book book) {
-                if (book == null) {
-                    //
-                } else {
+                if (book != null) {
                     displayBook(book);
                     currentlyViewedBook = book;
                     if (startedFromSavedFragment) {
@@ -187,7 +182,7 @@ public class BookViewFragment extends Fragment {
         showMoreTv.setOnClickListener(clickListenerForExpandableSummary);
         descriptionExpendable.setOnClickListener(clickListenerForExpandableSummary);
 
-        previewButtonTv = view.findViewById(R.id.preview_btn);
+        Button previewButtonTv = view.findViewById(R.id.preview_btn);
         saveButtonTv = view.findViewById(R.id.save_book_button);
 
         previewButtonTv.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +205,7 @@ public class BookViewFragment extends Fragment {
     }
 
     private void checkIfBookSaved(final Book book) {
-        SavedBooksViewModel savedBooksViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
+        SavedBooksViewModel savedBooksViewModel = new ViewModelProvider.AndroidViewModelFactory(Objects.requireNonNull(getActivity()).getApplication())
                 .create(SavedBooksViewModel.class);
         savedBooksViewModel.getSavedBooks().observe(this, new Observer<List<Book>>() {
             @Override
@@ -231,7 +226,8 @@ public class BookViewFragment extends Fragment {
 
     private void initOptionalViews(View view) {
         Log.d(TAG, "initOptionalViews: startedFromSaved=" + startedFromSavedFragment);
-        noteLabel = view.findViewById(R.id.note_label);
+        //hide these if book isn't viewed from saved list
+        TextView noteLabel = view.findViewById(R.id.note_label);
         notesTv = view.findViewById(R.id.notes_tv);
         editNoteBtn = view.findViewById(R.id.edit_note_btn);
 
@@ -257,8 +253,9 @@ public class BookViewFragment extends Fragment {
     private void saveBook(Book book) {
         if (book == null) {
             Log.d(TAG, "saveBook: attempting tos");
+            return;
         }
-        SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
+        SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(Objects.requireNonNull(getActivity()).getApplication())
                 .create(SavedBooksViewModel.class);
 
         long currentTime = System.currentTimeMillis();
@@ -275,7 +272,7 @@ public class BookViewFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if (deleteBookOnExit) {
-            SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
+            SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(Objects.requireNonNull(getActivity()).getApplication())
                     .create(SavedBooksViewModel.class);
             viewModel.delete(currentlyViewedBook);
         }
