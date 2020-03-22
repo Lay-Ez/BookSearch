@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.romanoindustries.booksearch.R;
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
-import com.romanoindustries.booksearch.imagetransformation.RoundedCornersTransformation;
-import com.romanoindustries.booksearch.networkutils.BookNetworkUtils;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
+import com.romanoindustries.booksearch.imagetransformation.PicassoHelper;
 
 import java.util.List;
 
@@ -91,24 +88,12 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             VolumeInfo volumeInfo = book.getVolumeInfo();
 
             String imgUrl = volumeInfo.getThumbnailURL();
-            loadImg(imgUrl);
-
+            PicassoHelper.loadThumbnail(imgUrl, iv_bookThumb);
 
             tv_bookTitle.setText(volumeInfo.getTitle());
             tv_authors.setText(volumeInfo.getAuthors().get(0));
             rb_rating.setRating((float) volumeInfo.getAvgRating());
             tv_numRatings.setText("(" + String.format("%d", volumeInfo.getRatingsCount()) + ")");
-        }
-
-        public void loadImg(String url) {
-            int radius = 5;
-            int margin = 5;
-            Transformation transformation = new RoundedCornersTransformation(radius, margin);
-            if (url == null || url.equals("")) {
-                Picasso.get().load(BookNetworkUtils.NO_IMAGE_AVAILABLE_URL).transform(transformation).into(iv_bookThumb);
-            } else {
-                Picasso.get().load(url).transform(transformation).into(iv_bookThumb);
-            }
         }
     }
 

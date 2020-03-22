@@ -23,12 +23,9 @@ import com.romanoindustries.booksearch.EditNoteActivity;
 import com.romanoindustries.booksearch.R;
 import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
-import com.romanoindustries.booksearch.imagetransformation.RoundedCornersTransformation;
-import com.romanoindustries.booksearch.networkutils.BookNetworkUtils;
+import com.romanoindustries.booksearch.imagetransformation.PicassoHelper;
 import com.romanoindustries.booksearch.viewmodels.BookViewActivityViewModel;
 import com.romanoindustries.booksearch.viewmodels.SavedBooksViewModel;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -99,7 +96,7 @@ public class BookViewFragment extends Fragment {
 
         VolumeInfo volumeInfo = book.getVolumeInfo();
 
-        loadThumbnail(volumeInfo.getThumbnailURL());
+        PicassoHelper.loadThumbnail(volumeInfo.getThumbnailURL(), thumbnailIM);
         titleTV.setText(volumeInfo.getTitle());
 
         List<String> authors = volumeInfo.getAuthors();
@@ -149,20 +146,11 @@ public class BookViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), EditNoteActivity.class);
+                String selfUrl = currentlyViewedBook.getSelfLink();
+                intent.putExtra(Intent.EXTRA_CONTENT_QUERY, selfUrl);
                 startActivity(intent);
             }
         });
-    }
-
-    private void loadThumbnail(String url) {
-        int radius = 5;
-        int margin = 5;
-        Transformation transformation = new RoundedCornersTransformation(radius, margin);
-        if (url == null || url.equals("")) {
-            Picasso.get().load(BookNetworkUtils.NO_IMAGE_AVAILABLE_URL).transform(transformation).into(thumbnailIM);
-        } else {
-            Picasso.get().load(url).transform(transformation).into(thumbnailIM);
-        }
     }
 
     private void initViews(View view) {
