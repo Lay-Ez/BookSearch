@@ -101,7 +101,10 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         searchFragmentViewModel.getBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                if (books == null || books.size() == 0) {
+                if (books == null) {
+                    return;
+                }
+                if (books.size() == 0) {
                     hideList();
                     return;
                 }
@@ -115,6 +118,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
                     showProgressBar();
+                    emptyTextView.setText(R.string.no_books_found); /*to show if no results*/
                 } else {
                     hideProgressBar();
                 }
@@ -193,11 +197,6 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 imageForTransition, ViewCompat.getTransitionName(imageForTransition));
-
-        /* Code for adding book to the saved list*/
-//        Book book = searchFragmentViewModel.getBooks().getValue().get(position);
-//        SavedBooksViewModel savedBooksViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication()).create(SavedBooksViewModel.class);
-//        savedBooksViewModel.insert(book);
 
         startActivity(viewBookIntent, options.toBundle());
     }

@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">BookSearch</string>
 
-    <string name="empty_list">No Books Found =(</string>
-    <string name="search_hint">Search books…</string>
-
     <!--    used in fragment_book_view -->
     <string name="avg_rating">Rating</string>
     <string name="num_reviews">Reviews</string>
@@ -29,6 +26,9 @@
     <string name="search_by_author">By Author</string>
     <string name="search_by_publisher">By Publisher</string>
     <string name="search_by_subject">By Subject</string>
+    <string name="empty_list">Welcome Back</string>
+    <string name="no_books_found">No Books Found</string>
+    <string name="search_hint">Search books…</string>
 
     <!--    used in edit note activity-->
     <string name="edit_note_hint">Note</string>
