@@ -36,4 +36,7 @@
     <string name="cancel">Cancel</string>
     <string name="edit_note_label">Edit note for this book</string>
 
+    <!--    used in saved fragment-->
+    <string name="empty_list_text">No Saved Books Yet</string>
+
 </resources>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
@@ -32,6 +33,7 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
     private SavedBooksViewModel savedBooksViewModel;
     private RecyclerView savedBooksRecyclerView;
     private BooksAdapter booksAdapter;
+    private TextView emptyListTv;
 
     public SavedBooksFragment() {}
 
@@ -45,7 +47,7 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
         savedBooksViewModel = new ViewModelProvider
                 .AndroidViewModelFactory(getActivity().getApplication())
                 .create(SavedBooksViewModel.class);
-
+        emptyListTv = view.findViewById(R.id.empty_saved_tv);
         savedBooksRecyclerView = view.findViewById(R.id.saved_books_list);
         booksAdapter = new BooksAdapter(new ArrayList<Book>(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -56,13 +58,18 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
             @Override
             public void onChanged(List<Book> books) {
                 if (books != null) {
-                    books.sort(new Comparator<Book>() {
-                        @Override
-                        public int compare(Book book1, Book book2) {
-                            return  (book1.getSavedTime() - book2.getSavedTime() > 0) ? -1 : 1;
-                        }
-                    });
-                    booksAdapter.updateBooks(books);
+                    if (books.isEmpty()) {
+                        displayEmptyList();
+                    } else {
+                        books.sort(new Comparator<Book>() {
+                            @Override
+                            public int compare(Book book1, Book book2) {
+                                return  (book1.getSavedTime() - book2.getSavedTime() > 0) ? -1 : 1;
+                            }
+                        });
+                        booksAdapter.updateBooks(books);
+                        displayNonEmptyList();
+                    }
                 }
             }
         });
@@ -82,5 +89,15 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
                 imageForTransition, ViewCompat.getTransitionName(imageForTransition));
 
         startActivity(viewBookIntent, options.toBundle());
+    }
+
+    private void displayEmptyList() {
+        savedBooksRecyclerView.setVisibility(View.GONE);
+        emptyListTv.setVisibility(View.VISIBLE);
+    }
+
+    private void displayNonEmptyList() {
+        emptyListTv.setVisibility(View.GONE);
+        savedBooksRecyclerView.setVisibility(View.VISIBLE);
     }
 }

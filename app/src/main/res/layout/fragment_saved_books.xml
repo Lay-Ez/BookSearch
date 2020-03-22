@@ -14,4 +14,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/empty_saved_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_list_text"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="22sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/saved_books_list"
+            app:layout_constraintEnd_toEndOf="@+id/saved_books_list"
+            app:layout_constraintStart_toStartOf="@+id/saved_books_list"
+            app:layout_constraintTop_toTopOf="@+id/saved_books_list" />
 </androidx.constraintlayout.widget.ConstraintLayout>
