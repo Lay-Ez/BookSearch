@@ -184,6 +184,17 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/note_divider" />
+
+            <View
+                    android:id="@+id/note_divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                     app:layout_constraintStart_toStartOf="@+id/guideline_left"
                     app:layout_constraintTop_toBottomOf="@id/barrier" />
 

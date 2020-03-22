@@ -100,6 +100,7 @@ public class BookViewFragment extends Fragment {
         titleTV.setText(volumeInfo.getTitle());
 
         List<String> authors = volumeInfo.getAuthors();
+        authorTV.setText(null);
         for (int i = 0; i < authors.size(); i++) {
             if (i == authors.size() - 1) {
                 authorTV.append(authors.get(i));
@@ -109,6 +110,7 @@ public class BookViewFragment extends Fragment {
         }
 
         List<String> categories = volumeInfo.getCategories();
+        categoriesTv.setText(null);
         for (int i = 0; i < categories.size(); i++) {
             if (i == categories.size() - 1) {
                 categoriesTv.append(categories.get(i));
