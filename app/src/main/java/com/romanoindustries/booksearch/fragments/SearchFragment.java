@@ -30,6 +30,7 @@ import com.romanoindustries.booksearch.bookmodel.Book;
 import com.romanoindustries.booksearch.viewmodels.SearchFragmentViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 public class SearchFragment extends Fragment implements BooksAdapter.OnBookListener {
     private static final String TAG = "SearchFragment";
@@ -45,7 +46,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     private ImageButton searchOptionsBtn;
     private PopupMenu popupMenu;
 
-    private boolean transitionStarted = false;
+    private boolean sharedElementTransitionStarted = false;
 
     public static final int SEARCH_EVERYWHERE = 0;
     public static final int SEARCH_BY_TITLE = 1;
@@ -191,17 +192,17 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
 
     @Override
     public void onBookClick(int position, ImageView imageForTransition) {
-        if (transitionStarted) {
+        if (sharedElementTransitionStarted) {
             return;
         }
-        transitionStarted = true;
+        sharedElementTransitionStarted = true;
         Intent viewBookIntent = new Intent(getContext(), BookViewActivity.class);
         viewBookIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        String bookUrl = searchFragmentViewModel.getBooks().getValue().get(position).getSelfLink();
+        String bookUrl = Objects.requireNonNull(searchFragmentViewModel.getBooks().getValue()).get(position).getSelfLink();
         viewBookIntent.putExtra(Intent.EXTRA_CONTENT_QUERY, bookUrl);
         viewBookIntent.putExtra(Intent.EXTRA_FROM_STORAGE, false);
 
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(Objects.requireNonNull(getActivity()),
                 imageForTransition, imageForTransition.getTransitionName());
 
         startActivity(viewBookIntent, options.toBundle());
@@ -243,6 +244,6 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     @Override
     public void onResume() {
         super.onResume();
-        transitionStarted = false;
+        sharedElementTransitionStarted = false;
     }
 }

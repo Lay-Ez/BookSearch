@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,6 +25,7 @@ import com.romanoindustries.booksearch.viewmodels.SavedBooksViewModel;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookListener {
     private static final String TAG = "SavedBooksFragment";
@@ -34,6 +34,8 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
     private RecyclerView savedBooksRecyclerView;
     private BooksAdapter booksAdapter;
     private TextView emptyListTv;
+
+    private boolean sharedElementTransitionStarted = false;
 
     public SavedBooksFragment() {}
 
@@ -45,7 +47,7 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
         View view = inflater.inflate(R.layout.fragment_saved_books, container, false);
 
         savedBooksViewModel = new ViewModelProvider
-                .AndroidViewModelFactory(getActivity().getApplication())
+                .AndroidViewModelFactory(Objects.requireNonNull(getActivity()).getApplication())
                 .create(SavedBooksViewModel.class);
         emptyListTv = view.findViewById(R.id.empty_saved_tv);
         savedBooksRecyclerView = view.findViewById(R.id.saved_books_list);
@@ -79,14 +81,18 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
 
     @Override
     public void onBookClick(int position, ImageView imageForTransition) {
+        if (sharedElementTransitionStarted) {
+            return;
+        }
+        sharedElementTransitionStarted = true;
         Intent viewBookIntent = new Intent(getContext(), BookViewActivity.class);
-        String bookUrl = savedBooksViewModel.getSavedBooks().getValue().get(position).getSelfLink();
+        String bookUrl = Objects.requireNonNull(savedBooksViewModel.getSavedBooks().getValue()).get(position).getSelfLink();
         viewBookIntent.putExtra(Intent.EXTRA_CONTENT_QUERY, bookUrl);
         viewBookIntent.putExtra(Intent.EXTRA_FROM_STORAGE, true);
         viewBookIntent.putExtra(Intent.EXTRA_INDEX, position);
 
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                imageForTransition, ViewCompat.getTransitionName(imageForTransition));
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(Objects.requireNonNull(getActivity()),
+                imageForTransition, imageForTransition.getTransitionName());
 
         startActivity(viewBookIntent, options.toBundle());
     }
@@ -99,5 +105,11 @@ public class SavedBooksFragment extends Fragment implements BooksAdapter.OnBookL
     private void displayNonEmptyList() {
         emptyListTv.setVisibility(View.GONE);
         savedBooksRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sharedElementTransitionStarted = false;
     }
 }
