@@ -37,7 +37,7 @@ public class EditNoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_note_collapsing);
+        setContentView(R.layout.edit_note_activity);
         initViews();
 
         final String bookUrl = getIntent().getStringExtra(Intent.EXTRA_CONTENT_QUERY);

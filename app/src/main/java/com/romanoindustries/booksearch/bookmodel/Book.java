@@ -18,6 +18,8 @@ public class Book {
     private String selfLink;
     private String personalNote;
     private Long savedTime;
+    @ColumnInfo (name = "web_reader_link")
+    private String webReaderLink;
 
     public Book(VolumeInfo volumeInfo, String selfLink) {
         this.volumeInfo = volumeInfo;
@@ -46,5 +48,13 @@ public class Book {
 
     public void setSavedTime(Long savedTime) {
         this.savedTime = savedTime;
+    }
+
+    public String getWebReaderLink() {
+        return webReaderLink;
+    }
+
+    public void setWebReaderLink(String webReaderLink) {
+        this.webReaderLink = webReaderLink;
     }
 }
