@@ -7,22 +7,6 @@
         android:layout_height="match_parent">
 
     <TextView
-            android:id="@+id/note_label2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:background="?android:colorBackground"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="@string/notes"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@+id/edit_note_btn" />
-
-    <TextView
             android:id="@+id/notes_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

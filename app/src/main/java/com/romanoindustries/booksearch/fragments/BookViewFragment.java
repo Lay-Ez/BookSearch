@@ -92,7 +92,6 @@ public class BookViewFragment extends Fragment {
 
     private void displayBook(Book book) {
         VolumeInfo volumeInfo = book.getVolumeInfo();
-        Log.d(TAG, "displayBook: infoUrl=" + volumeInfo.getInfoUrl());
 
         PicassoHelper.loadThumbnail(volumeInfo.getThumbnailURL(), thumbnailIM);
         titleTV.setText(volumeInfo.getTitle());
@@ -131,6 +130,9 @@ public class BookViewFragment extends Fragment {
 
         descriptionExpendable.setText(Html.fromHtml(volumeInfo.getDescription(), Html.FROM_HTML_MODE_LEGACY));
         displayOptionalSaved(book);
+
+        Log.d(TAG, "displayBook: ISBN10=" + volumeInfo.getIsbn10());
+        Log.d(TAG, "displayBook: ISBN13=" + volumeInfo.getIsbn13());
     }
 
     private void displayOptionalSaved(Book book) {

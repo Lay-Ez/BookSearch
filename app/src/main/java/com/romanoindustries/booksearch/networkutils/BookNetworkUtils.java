@@ -197,6 +197,29 @@ public class BookNetworkUtils {
             volumeInfo.setPreviewUrl(volumeInfoJson.optString("previewLink", ""));
             volumeInfo.setInfoUrl(volumeInfoJson.optString("infoLink", ""));
 
+            String unknown = "UNKNOWN";
+            JSONArray isbnJsonArray = volumeInfoJson.optJSONArray("industryIdentifiers");
+            if (isbnJsonArray != null && isbnJsonArray.length() > 0) {
+                for (int i = 0; i < isbnJsonArray.length(); i++) {
+                    JSONObject identifier = isbnJsonArray.getJSONObject(i);
+                    String type = identifier.getString("type");
+                    String identifierNumber = identifier.optString("identifier", unknown);
+                    if(type.equals("ISBN_10")) {
+                        volumeInfo.setIsbn10(identifierNumber);
+                    } else if (type.equals("ISBN_13")) {
+                        volumeInfo.setIsbn13(identifierNumber);
+                    } else {
+                        volumeInfo.setIsbn10(unknown);
+                        volumeInfo.setIsbn13(unknown);
+                    }
+                }
+            } else {
+                volumeInfo.setIsbn10(unknown);
+                volumeInfo.setIsbn13(unknown);
+            }
+
+            JSONObject accessInfo = jsonBook.getJSONObject("accessInfo");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
