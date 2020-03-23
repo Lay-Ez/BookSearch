@@ -12,9 +12,9 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:usesCleartextTraffic="true">
-        <activity android:name=".EditNoteActivity"></activity>
-        <activity android:name=".BookViewActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".EditNoteActivity" android:launchMode="singleTop"></activity>
+        <activity android:name=".BookViewActivity" android:launchMode="singleTop"></activity>
+        <activity android:name=".MainActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

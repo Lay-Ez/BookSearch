@@ -17,7 +17,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -45,6 +44,8 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
     private ProgressBar loadMoreProgressBar;
     private ImageButton searchOptionsBtn;
     private PopupMenu popupMenu;
+
+    private boolean transitionStarted = false;
 
     public static final int SEARCH_EVERYWHERE = 0;
     public static final int SEARCH_BY_TITLE = 1;
@@ -190,13 +191,18 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
 
     @Override
     public void onBookClick(int position, ImageView imageForTransition) {
+        if (transitionStarted) {
+            return;
+        }
+        transitionStarted = true;
         Intent viewBookIntent = new Intent(getContext(), BookViewActivity.class);
+        viewBookIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         String bookUrl = searchFragmentViewModel.getBooks().getValue().get(position).getSelfLink();
         viewBookIntent.putExtra(Intent.EXTRA_CONTENT_QUERY, bookUrl);
         viewBookIntent.putExtra(Intent.EXTRA_FROM_STORAGE, false);
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                imageForTransition, ViewCompat.getTransitionName(imageForTransition));
+                imageForTransition, imageForTransition.getTransitionName());
 
         startActivity(viewBookIntent, options.toBundle());
     }
@@ -233,4 +239,10 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
             return true;
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        transitionStarted = false;
+    }
 }

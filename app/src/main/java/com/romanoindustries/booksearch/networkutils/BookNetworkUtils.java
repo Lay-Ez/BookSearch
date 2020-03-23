@@ -155,6 +155,8 @@ public class BookNetworkUtils {
     public static Book parseJsonBook(JSONObject jsonBook) {
 
         VolumeInfo volumeInfo = new VolumeInfo();
+        String webReaderLink = "";
+
 
         try {
             JSONObject volumeInfoJson = jsonBook.getJSONObject("volumeInfo");
@@ -197,7 +199,7 @@ public class BookNetworkUtils {
             volumeInfo.setPreviewUrl(volumeInfoJson.optString("previewLink", ""));
             volumeInfo.setInfoUrl(volumeInfoJson.optString("infoLink", ""));
 
-            String unknown = "UNKNOWN";
+            String unknown = "";
             JSONArray isbnJsonArray = volumeInfoJson.optJSONArray("industryIdentifiers");
             if (isbnJsonArray != null && isbnJsonArray.length() > 0) {
                 for (int i = 0; i < isbnJsonArray.length(); i++) {
@@ -219,12 +221,16 @@ public class BookNetworkUtils {
             }
 
             JSONObject accessInfo = jsonBook.getJSONObject("accessInfo");
+            webReaderLink = accessInfo.optString("webReaderLink", "");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         String selfLinkUrl = jsonBook.optString("selfLink", "");
-        return new Book(volumeInfo, selfLinkUrl);
+        Book book = new Book(volumeInfo, selfLinkUrl);
+        book.setWebReaderLink(webReaderLink);
+
+        return book;
     }
 }

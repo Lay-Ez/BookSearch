@@ -52,6 +52,7 @@ public class BookViewFragment extends Fragment {
     private ExpandableTextView descriptionExpendable;
     private TextView showMoreTv;
     private Button saveButtonTv;
+    private Button previewButtonTv;
     private TextView categoriesTv;
 
     private TextView notesTv;
@@ -90,7 +91,7 @@ public class BookViewFragment extends Fragment {
         return view;
     }
 
-    private void displayBook(Book book) {
+    private void displayBook(final Book book) {
         VolumeInfo volumeInfo = book.getVolumeInfo();
 
         PicassoHelper.loadThumbnail(volumeInfo.getThumbnailURL(), thumbnailIM);
@@ -128,11 +129,28 @@ public class BookViewFragment extends Fragment {
             reviewsLabelTv.setText(getString(R.string.reviews));
         }
 
+        previewButtonTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String previewUrl = book.getVolumeInfo().getPreviewUrl();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(previewUrl));
+                startActivity(browserIntent);
+            }
+        });
+
+        saveButtonTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveBook(book);
+            }
+        });
+
         descriptionExpendable.setText(Html.fromHtml(volumeInfo.getDescription(), Html.FROM_HTML_MODE_LEGACY));
         displayOptionalSaved(book);
 
         Log.d(TAG, "displayBook: ISBN10=" + volumeInfo.getIsbn10());
         Log.d(TAG, "displayBook: ISBN13=" + volumeInfo.getIsbn13());
+        Log.d(TAG, "displayBook: webReaderLink=" + book.getWebReaderLink());
     }
 
     private void displayOptionalSaved(Book book) {
@@ -179,24 +197,8 @@ public class BookViewFragment extends Fragment {
         showMoreTv.setOnClickListener(clickListenerForExpandableSummary);
         descriptionExpendable.setOnClickListener(clickListenerForExpandableSummary);
 
-        Button previewButtonTv = view.findViewById(R.id.preview_btn);
+        previewButtonTv = view.findViewById(R.id.preview_btn);
         saveButtonTv = view.findViewById(R.id.save_book_button);
-
-        previewButtonTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String previewUrl = currentlyViewedBook.getVolumeInfo().getPreviewUrl();
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(previewUrl));
-                startActivity(browserIntent);
-            }
-        });
-
-        saveButtonTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveBook(currentlyViewedBook);
-            }
-        });
 
         initOptionalViews(view);
     }
