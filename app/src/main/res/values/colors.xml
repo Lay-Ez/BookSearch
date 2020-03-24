@@ -9,6 +9,7 @@
     <color name="color_button">#F48FB1</color>
     <color name="color_when_button_pressed">#F8BBD0</color>
     <color name="color_button_disabled">#7E7E7E</color>
+    <color name="color_ripple_trans_button">#F8BBD0</color>
 
     <color name="color_text_button">#000000</color>
     <color name="color_toolbar_text">#000000</color>

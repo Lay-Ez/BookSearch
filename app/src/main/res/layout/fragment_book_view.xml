@@ -219,9 +219,9 @@
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/read_preview"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:textColor="@color/color_text_button"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline_center"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
@@ -236,9 +236,9 @@
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/save_book"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:textColor="@color/color_text_button"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/preview_btn"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_center" />
