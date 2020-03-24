@@ -132,7 +132,7 @@ public class BookViewFragment extends Fragment {
         previewButtonTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String previewUrl = book.getVolumeInfo().getPreviewUrl();
+                String previewUrl = book.getWebReaderLink();
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(previewUrl));
                 startActivity(browserIntent);
             }
