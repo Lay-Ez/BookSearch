@@ -28,7 +28,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:background="@color/colorPrimary"
                     app:title="@string/app_name"
-                    app:titleTextColor="@color/design_default_color_background" />
+                    app:titleTextColor="@color/color_toolbar_text" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -97,7 +97,7 @@
                     android:padding="4dp"
                     android:text="@string/cancel"
                     android:textAllCaps="false"
-                    android:textColor="@color/design_default_color_background"
+                    android:textColor="@color/color_text_button"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_mid"
                     app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -114,7 +114,7 @@
                     android:padding="4dp"
                     android:text="@string/save_note"
                     android:textAllCaps="false"
-                    android:textColor="@color/design_default_color_background"
+                    android:textColor="@color/color_text_button"
                     android:textSize="18sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/cancel_note_btn"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_right"
@@ -131,6 +131,7 @@
                     android:background="@drawable/background_frame_for_categories"
                     android:padding="4dp"
                     app:boxStrokeColor="@null"
+                    app:hintTextColor="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +141,11 @@
                         android:id="@+id/note_text_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/edit_note_hint" />
+                        android:backgroundTint="@color/colorPrimary"
+                        android:hint="@string/edit_note_hint"
+                        android:textColorHighlight="@color/colorPrimaryDark"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textCursorDrawable="@null" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.constraintlayout.widget.Guideline

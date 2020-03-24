@@ -29,7 +29,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:background="@color/colorPrimary"
                     app:title="@string/app_name"
-                    app:titleTextColor="@color/design_default_color_background" />
+                    app:titleTextColor="@color/color_toolbar_text" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>

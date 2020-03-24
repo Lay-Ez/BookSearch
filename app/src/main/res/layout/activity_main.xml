@@ -32,7 +32,7 @@
                     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                     app:layout_collapseMode="pin"
                     app:title="@string/app_name"
-                    app:titleTextColor="@color/design_default_color_surface" />
+                    app:titleTextColor="@color/color_toolbar_text" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -41,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:elevation="4dp"
-                app:layout_scrollFlags="scroll|enterAlways|snap">
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:tabIndicatorColor="@color/colorPrimary">
 
             <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
