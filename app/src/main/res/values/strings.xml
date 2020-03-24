@@ -18,7 +18,8 @@
     <string name="show_less">show less</string>
     <string name="categories">Categories</string>
     <string name="notes">Your Note</string>
-    <string name="book_info_section">Book info</string>
+    <string name="book_info">more information</string>
+    <string name="open_google_play">open in play store</string>
 
     <string name="note_stub">---You saved this book on %1$s---</string>
     <!--    used in search fragment-->
