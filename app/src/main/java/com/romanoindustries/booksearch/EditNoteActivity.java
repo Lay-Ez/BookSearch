@@ -37,7 +37,7 @@ public class EditNoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_note_activity);
+        setContentView(R.layout.activity_edit_note);
         initViews();
 
         final String bookUrl = getIntent().getStringExtra(Intent.EXTRA_CONTENT_QUERY);
@@ -74,6 +74,7 @@ public class EditNoteActivity extends AppCompatActivity {
         titleTv.setText(volumeInfo.getTitle());
 
         List<String> authors = volumeInfo.getAuthors();
+        authorTv.setText("");
         for (int i = 0; i < authors.size(); i++) {
             if (i == authors.size() - 1) {
                 authorTv.append(authors.get(i));

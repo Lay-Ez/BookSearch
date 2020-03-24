@@ -54,6 +54,7 @@ public class BookViewFragment extends Fragment {
     private Button saveButtonTv;
     private Button previewButtonTv;
     private TextView categoriesTv;
+    private Button googlePlayBtn;
 
     private TextView notesTv;
     private ImageButton editNoteBtn;
@@ -145,6 +146,15 @@ public class BookViewFragment extends Fragment {
             }
         });
 
+        googlePlayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String previewUrl = book.getVolumeInfo().getInfoUrl();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(previewUrl));
+                startActivity(browserIntent);
+            }
+        });
+
         descriptionExpendable.setText(Html.fromHtml(volumeInfo.getDescription(), Html.FROM_HTML_MODE_LEGACY));
         displayOptionalSaved(book);
 
@@ -199,6 +209,8 @@ public class BookViewFragment extends Fragment {
 
         previewButtonTv = view.findViewById(R.id.preview_btn);
         saveButtonTv = view.findViewById(R.id.save_book_button);
+
+        googlePlayBtn = view.findViewById(R.id.google_play_btn);
 
         initOptionalViews(view);
     }
