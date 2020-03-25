@@ -103,6 +103,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
     private void saveNote() {
         String newNote = Objects.requireNonNull(noteTextInput.getText()).toString();
+        newNote = newNote.trim();
         currentlyEditedBook.setPersonalNote(newNote);
         savedBooksViewModel.update(currentlyEditedBook);
         onBackPressed();
