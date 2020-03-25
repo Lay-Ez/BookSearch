@@ -161,8 +161,7 @@ public class BookViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), BookInfoActivity.class);
-                String selfUrl = currentlyViewedBook.getSelfLink();
-                intent.putExtra(Intent.EXTRA_CONTENT_QUERY, selfUrl);
+                putBookInfoInIntent(intent);
                 startActivity(intent);
             }
         });
@@ -290,6 +289,28 @@ public class BookViewFragment extends Fragment {
         viewModel.insert(currentlyViewedBook);
         saveButtonTv.setText(R.string.saved);
         saveButtonTv.setEnabled(false);
+    }
+
+    private void putBookInfoInIntent(Intent intent) {
+        VolumeInfo volumeInfo = currentlyViewedBook.getVolumeInfo();
+        intent.putExtra(BookInfoActivity.BOOK_TITLE, volumeInfo.getTitle());
+
+        StringBuilder authorsSb = new StringBuilder("");
+        List<String> authors = volumeInfo.getAuthors();
+        for (int i = 0; i < authors.size(); i++) {
+            if (i == authors.size() - 1) {
+                authorsSb.append(authors.get(i));
+            } else {
+                authorsSb.append(authors.get(i)).append(", ");
+            }
+        }
+        intent.putExtra(BookInfoActivity.BOOK_AUTHORS, authorsSb.toString());
+        intent.putExtra(BookInfoActivity.BOOK_PUBLISHER, volumeInfo.getPublisher());
+        intent.putExtra(BookInfoActivity.BOOK_DATE, volumeInfo.getPublishedDate());
+        intent.putExtra(BookInfoActivity.BOOK_PAGES, String.valueOf(volumeInfo.getPageCount()));
+        intent.putExtra(BookInfoActivity.BOOK_ISBN10, volumeInfo.getIsbn10());
+        intent.putExtra(BookInfoActivity.BOOK_ISBN13, volumeInfo.getIsbn13());
+        intent.putExtra(BookInfoActivity.BOOK_LANG, volumeInfo.getLanguage());
     }
 
     @Override

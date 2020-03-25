@@ -6,16 +6,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.romanoindustries.booksearch.bookmodel.Book;
-import com.romanoindustries.booksearch.bookmodel.VolumeInfo;
-import com.romanoindustries.booksearch.viewmodels.SavedBooksViewModel;
-
-import java.util.List;
 
 public class BookInfoActivity extends AppCompatActivity {
+
+    public static final String BOOK_TITLE = "book_title";
+    public static final String BOOK_AUTHORS = "bool_authors";
+    public static final String BOOK_PUBLISHER = "book_publisher";
+    public static final String BOOK_DATE = "book_date";
+    public static final String BOOK_PAGES = "book_pages";
+    public static final String BOOK_ISBN10 = "book_isbn10";
+    public static final String BOOK_ISBN13 = "book_isbn13";
+    public static final String BOOK_LANG = "book_lang";
 
     private TextView titleTv;
     private TextView authorTv;
@@ -37,49 +38,19 @@ public class BookInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         initViews();
-
-        final String bookUrl = getIntent().getStringExtra(Intent.EXTRA_CONTENT_QUERY);
-        SavedBooksViewModel savedBooksViewModel =
-                new ViewModelProvider.AndroidViewModelFactory(getApplication()).
-                        create(SavedBooksViewModel.class);
-        savedBooksViewModel.getSavedBooks().observe(this, new Observer<List<Book>>() {
-            @Override
-            public void onChanged(List<Book> books) {
-                if (books != null && !books.isEmpty()) {
-                    for (Book book : books) {
-                        if (book.getSelfLink().equals(bookUrl)) {
-                            displayBook(book);
-                            return;
-                        }
-                    }
-                }
-            }
-        });
-
+        displayInfo(getIntent());
 
     }
 
-    private void displayBook(Book book) {
-        VolumeInfo volumeInfo = book.getVolumeInfo();
-
-        titleTv.setText(volumeInfo.getTitle());
-
-        List<String> authors = volumeInfo.getAuthors();
-        authorTv.setText("");
-        for (int i = 0; i < authors.size(); i++) {
-            if (i == authors.size() - 1) {
-                authorTv.append(authors.get(i));
-            } else {
-                authorTv.append(authors.get(i) + ", ");
-            }
-        }
-
-        publisherTv.setText(volumeInfo.getPublisher());
-        dateTv.setText(volumeInfo.getPublishedDate());
-        pagesCountTv.setText(String.valueOf(volumeInfo.getPageCount()));
-        isbn10Tv.setText(volumeInfo.getIsbn10());
-        isbn13Tv.setText(volumeInfo.getIsbn13());
-        langTv.setText(volumeInfo.getLanguage());
+    private void displayInfo(Intent intent) {
+        titleTv.setText(intent.getStringExtra(BOOK_TITLE));
+        authorTv.setText(intent.getStringExtra(BOOK_AUTHORS));
+        publisherTv.setText(intent.getStringExtra(BOOK_PUBLISHER));
+        dateTv.setText(intent.getStringExtra(BOOK_DATE));
+        pagesCountTv.setText(intent.getStringExtra(BOOK_PAGES));
+        isbn10Tv.setText(intent.getStringExtra(BOOK_ISBN10));
+        isbn13Tv.setText(intent.getStringExtra(BOOK_ISBN13));
+        langTv.setText(intent.getStringExtra(BOOK_LANG));
     }
 
     private void initViews() {
