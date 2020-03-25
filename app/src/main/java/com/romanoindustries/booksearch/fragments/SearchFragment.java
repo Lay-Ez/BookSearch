@@ -1,8 +1,10 @@
 package com.romanoindustries.booksearch.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,7 +94,8 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
             @Override
             public void onClick(View v) {
                 if (popupMenu == null) {
-                    popupMenu = new PopupMenu(getContext(), v);
+                    Context wrapper = new ContextThemeWrapper(getContext(), R.style.PopupMenuStyle);
+                    popupMenu = new PopupMenu(wrapper, v);
                     popupMenu.getMenuInflater().inflate(R.menu.search_popup_menu, popupMenu.getMenu());
                     popupMenu.setOnMenuItemClickListener(searchMenuClickListener);
                 }

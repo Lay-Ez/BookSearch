@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">BookSearch</string>
+    <string name="version_number">v 0.420</string>
 
     <!--    used in fragment_book_view -->
     <string name="avg_rating">Rating</string>
