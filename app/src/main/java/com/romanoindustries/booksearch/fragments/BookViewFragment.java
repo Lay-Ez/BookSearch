@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.romanoindustries.booksearch.BookInfoActivity;
 import com.romanoindustries.booksearch.EditNoteActivity;
 import com.romanoindustries.booksearch.R;
 import com.romanoindustries.booksearch.bookmodel.Book;
@@ -55,6 +56,7 @@ public class BookViewFragment extends Fragment {
     private Button previewButtonTv;
     private TextView categoriesTv;
     private Button googlePlayBtn;
+    private Button moreInfoBtn;
 
     private TextView notesTv;
     private ImageButton editNoteBtn;
@@ -155,6 +157,16 @@ public class BookViewFragment extends Fragment {
             }
         });
 
+        moreInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), BookInfoActivity.class);
+                String selfUrl = currentlyViewedBook.getSelfLink();
+                intent.putExtra(Intent.EXTRA_CONTENT_QUERY, selfUrl);
+                startActivity(intent);
+            }
+        });
+
         descriptionExpendable.setText(Html.fromHtml(volumeInfo.getDescription(), Html.FROM_HTML_MODE_LEGACY));
         displayOptionalSaved(book);
 
@@ -211,6 +223,7 @@ public class BookViewFragment extends Fragment {
         saveButtonTv = view.findViewById(R.id.save_book_button);
 
         googlePlayBtn = view.findViewById(R.id.google_play_btn);
+        moreInfoBtn = view.findViewById(R.id.more_info_btn);
 
         initOptionalViews(view);
     }

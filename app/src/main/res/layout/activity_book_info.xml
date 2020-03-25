@@ -91,7 +91,7 @@
                     android:id="@+id/divider5"
                     android:layout_width="379dp"
                     android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:background="?android:attr/listDivider"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -218,7 +218,7 @@
                     tools:text="1234567890" />
 
             <TextView
-                    android:id="@+id/isbn13_tv"
+                    android:id="@+id/isbn13_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -229,7 +229,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/isbn10_tv" />
 
             <TextView
-                    android:id="@+id/textView16"
+                    android:id="@+id/isbn13_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -238,7 +238,7 @@
                     android:textColor="@android:color/black"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/isbn13_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/isbn13_label"
                     tools:text="1234567890123" />
 
             <TextView
@@ -250,10 +250,10 @@
                     android:text="@string/book_info_language_label"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                    app:layout_constraintTop_toBottomOf="@+id/isbn13_tv" />
 
             <TextView
-                    android:id="@+id/textView18"
+                    android:id="@+id/info_laguage_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

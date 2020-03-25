@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:usesCleartextTraffic="true">
-        <activity android:name=".activity_book_info"></activity>
+        <activity android:name=".BookInfoActivity"></activity>
         <activity
                 android:name=".EditNoteActivity"
                 android:launchMode="singleTop"></activity>
