@@ -60,7 +60,7 @@ public class EditNoteActivity extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = findViewById(R.id.note_toolbar);
+        Toolbar toolbar = findViewById(R.id.info_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

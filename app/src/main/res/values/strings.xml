@@ -23,6 +23,7 @@
     <string name="open_google_play">open in play store</string>
 
     <string name="note_stub">---You saved this book on %1$s---</string>
+
     <!--    used in search fragment-->
     <string name="search_everywhere">Everywhere</string>
     <string name="search_by_title">By Title</string>
@@ -42,4 +43,37 @@
     <!--    used in saved fragment-->
     <string name="empty_list_text">No Saved Books</string>
 
+    <!--    used in info activity-->
+    <string name="book_info_placeholder">-</string>
+    <string name="book_info_label">Book information</string>
+    <string name="book_author_info_label">Author</string>
+    <string name="book_publisher_info_label">Publisher</string>
+    <string name="book_publish_date_info_label">Publication date</string>
+    <string name="book_pages_info_label">Pages</string>
+    <string name="book_isbn10_info_label">ISBN 10</string>
+    <string name="book_isbn13_info_label">ISBN 13</string>
+    <string name="book_info_language_label">Language</string>
+
 </resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
