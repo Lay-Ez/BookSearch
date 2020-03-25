@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,10 +170,6 @@ public class BookViewFragment extends Fragment {
         checkTextLength(descriptionExpendable, showMoreTv);
 
         displayOptionalSaved(book);
-
-        Log.d(TAG, "displayBook: ISBN10=" + volumeInfo.getIsbn10());
-        Log.d(TAG, "displayBook: ISBN13=" + volumeInfo.getIsbn13());
-        Log.d(TAG, "displayBook: webReaderLink=" + book.getWebReaderLink());
     }
 
     private void displayOptionalSaved(Book book) {
@@ -251,7 +246,6 @@ public class BookViewFragment extends Fragment {
     }
 
     private void initOptionalViews(View view) {
-        Log.d(TAG, "initOptionalViews: startedFromSaved=" + startedFromSavedFragment);
         //hide these if book isn't viewed from saved list
         TextView noteLabel = view.findViewById(R.id.note_label);
         notesTv = view.findViewById(R.id.notes_tv);
@@ -278,7 +272,6 @@ public class BookViewFragment extends Fragment {
 
     private void saveBook(Book book) {
         if (book == null) {
-            Log.d(TAG, "saveBook: attempting tos");
             return;
         }
         SavedBooksViewModel viewModel = new ViewModelProvider.AndroidViewModelFactory(Objects.requireNonNull(getActivity()).getApplication())
