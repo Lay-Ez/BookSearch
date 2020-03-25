@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +52,7 @@ public class BookViewFragment extends Fragment {
     private TextView numPagesTv;
     private TextView reviewsLabelTv;
     private ExpandableTextView descriptionExpendable;
-    private TextView showMoreTv;
+    private Button showMoreTv;
     private Button saveButtonTv;
     private Button previewButtonTv;
     private TextView categoriesTv;
@@ -167,6 +168,8 @@ public class BookViewFragment extends Fragment {
         });
 
         descriptionExpendable.setText(Html.fromHtml(volumeInfo.getDescription(), Html.FROM_HTML_MODE_LEGACY));
+        checkTextLength(descriptionExpendable, showMoreTv);
+
         displayOptionalSaved(book);
 
         Log.d(TAG, "displayBook: ISBN10=" + volumeInfo.getIsbn10());
@@ -321,5 +324,21 @@ public class BookViewFragment extends Fragment {
                     .create(SavedBooksViewModel.class);
             viewModel.delete(currentlyViewedBook);
         }
+    }
+
+    private void checkTextLength(ExpandableTextView textView, Button button) {
+        Layout layout = textView.getLayout();
+        if(layout != null) {
+            int lines = layout.getLineCount();
+            if(lines > 0) {
+                int ellipsisCount = layout.getEllipsisCount(lines - 1);
+                if ( ellipsisCount > 0) {
+                    button.setVisibility(View.VISIBLE);
+                    button.setEnabled(true);
+                    return;
+                }
+            }
+        }
+        button.setVisibility(View.GONE);
     }
 }

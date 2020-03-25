@@ -308,7 +308,6 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="100dp"
             android:layout_height="32dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/button_ripple"
             android:elevation="2dp"
@@ -318,8 +317,10 @@
             android:text="@string/show_more"
             android:textAllCaps="false"
             android:textColor="@color/color_text_button"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/divider3"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-            app:layout_constraintTop_toBottomOf="@+id/expendable_text_view" />
+            app:layout_constraintTop_toTopOf="@+id/divider3" />
 
     <TextView
             android:id="@+id/categories_tv"
@@ -342,7 +343,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="28dp"
             android:background="?android:colorBackground"
             android:fontFamily="@font/roboto"
             android:paddingStart="4dp"
@@ -352,7 +353,7 @@
             android:textSize="18sp"
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@+id/showmore_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
     <ImageButton
             android:id="@+id/edit_note_btn"
@@ -370,11 +371,11 @@
             android:id="@+id/divider3"
             android:layout_width="0dp"
             android:layout_height="1dp"
+            android:layout_marginTop="32dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="@+id/showmore_btn"
             app:layout_constraintEnd_toEndOf="@id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toTopOf="@+id/showmore_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/expendable_text_view" />
 
     <View
             android:id="@+id/divider4"
