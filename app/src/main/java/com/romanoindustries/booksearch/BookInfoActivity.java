@@ -43,13 +43,16 @@ public class BookInfoActivity extends AppCompatActivity {
     }
 
     private void displayInfo(Intent intent) {
+        String isbn10 = intent.getStringExtra(BOOK_ISBN10);
+        String isbn13 = intent.getStringExtra(BOOK_ISBN13);
+
         titleTv.setText(intent.getStringExtra(BOOK_TITLE));
         authorTv.setText(intent.getStringExtra(BOOK_AUTHORS));
         publisherTv.setText(intent.getStringExtra(BOOK_PUBLISHER));
         dateTv.setText(intent.getStringExtra(BOOK_DATE));
         pagesCountTv.setText(intent.getStringExtra(BOOK_PAGES));
-        isbn10Tv.setText(intent.getStringExtra(BOOK_ISBN10));
-        isbn13Tv.setText(intent.getStringExtra(BOOK_ISBN13));
+        isbn10Tv.setText(isbn10 == null || (isbn10.isEmpty()) ? getString(R.string.book_info_placeholder) : isbn10);
+        isbn13Tv.setText((isbn13 == null || isbn13.isEmpty()) ? getString(R.string.book_info_placeholder) : isbn13);
         langTv.setText(intent.getStringExtra(BOOK_LANG));
     }
 
