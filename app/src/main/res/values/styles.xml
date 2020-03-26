@@ -9,11 +9,10 @@
 
         <item name="android:windowContentTransitions">true</item>
         <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorPrimary</item>
     </style>
 
     <style name="PopupMenuStyle" parent="Widget.AppCompat.PopupMenu">
-        <item name="android:itemBackground">@color/color_when_button_pressed</item>
+        <item name="android:itemBackground">@color/colorPrimary</item>
         <item name="android:colorControlActivated">@color/colorAccent</item>
     </style>
 

@@ -27,7 +27,7 @@
                     android:id="@+id/tool_bar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/color_toolbar"
                     android:minHeight="?attr/actionBarSize"
                     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                     app:layout_collapseMode="pin"
@@ -40,9 +40,10 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/color_tabs_background"
                 android:elevation="4dp"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:tabIndicatorColor="@color/colorPrimary">
+                app:tabIndicatorColor="@color/colorAccent">
 
             <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
