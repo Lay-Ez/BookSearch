@@ -253,7 +253,11 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
             Snackbar snackbar =  Snackbar
                     .make(getActivity().findViewById(android.R.id.content),
                             R.string.no_internet_snack,
-                            Snackbar.LENGTH_SHORT);
+                            Snackbar.LENGTH_LONG);
+
+            View snackView = snackbar.getView();
+            TextView tv = snackView.findViewById(com.google.android.material.R.id.snackbar_text);
+            tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             snackbar.show();
         }
     }

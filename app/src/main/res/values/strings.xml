@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BookSearch</string>
     <string name="version_number">v 0.420</string>
-    <string name="no_internet_snack">No Internet Connection</string>
+
 
     <!--    used in fragment_book_view -->
     <string name="avg_rating">Rating</string>
@@ -22,6 +22,8 @@
     <string name="notes">Your Note</string>
     <string name="book_info">book information</string>
     <string name="open_google_play">open in play store</string>
+    <string name="snackbar_book_removed">Book removed</string>
+    <string name="undo_remove">UNDO</string>
 
     <string name="note_stub">---You saved this book on %1$s---</string>
 
@@ -34,6 +36,7 @@
     <string name="empty_list">Welcome Back</string>
     <string name="no_books_found">No Books Found</string>
     <string name="search_hint">Search books…</string>
+    <string name="no_internet_snack">No Internet Connection</string>
 
     <!--    used in edit note activity-->
     <string name="edit_note_hint">Note</string>

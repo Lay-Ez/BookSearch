@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.romanoindustries.booksearch.BookInfoActivity;
 import com.romanoindustries.booksearch.EditNoteActivity;
 import com.romanoindustries.booksearch.R;
@@ -266,8 +267,29 @@ public class BookViewFragment extends Fragment {
                 saveButtonTv.setText(R.string.removed);
                 saveButtonTv.setEnabled(false);
                 deleteBookOnExit = true;
+                showRemoveSnackbar();
             }
         });
+    }
+
+    private void showRemoveSnackbar() {
+        Snackbar snackbar =  Snackbar
+                .make(getActivity().findViewById(android.R.id.content),
+                        R.string.snackbar_book_removed,
+                        Snackbar.LENGTH_LONG).setAction(R.string.undo_remove, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteBookOnExit = false;
+                        saveButtonTv.setText(R.string.remove);
+                        saveButtonTv.setEnabled(true);
+                    }
+                })
+                .setActionTextColor(getResources().getColor(R.color.colorAccent));
+        View snackView = snackbar.getView();
+        TextView tv = snackView.findViewById(com.google.android.material.R.id.snackbar_text);
+        tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        snackbar.show();
+        snackbar.show();
     }
 
     private void saveBook(Book book) {
