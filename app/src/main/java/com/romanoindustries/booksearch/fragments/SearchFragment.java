@@ -2,6 +2,7 @@ package com.romanoindustries.booksearch.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -25,6 +26,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.romanoindustries.booksearch.BookViewActivity;
 import com.romanoindustries.booksearch.R;
 import com.romanoindustries.booksearch.adapters.BooksAdapter;
@@ -106,6 +108,7 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
         searchFragmentViewModel.getBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
+                checkConnection();
                 if (books == null) {
                     return;
                 }
@@ -243,6 +246,17 @@ public class SearchFragment extends Fragment implements BooksAdapter.OnBookListe
             return true;
         }
     };
+
+    private void checkConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm.getActiveNetworkInfo() == null) {
+            Snackbar snackbar =  Snackbar
+                    .make(getActivity().findViewById(android.R.id.content),
+                            R.string.no_internet_snack,
+                            Snackbar.LENGTH_SHORT);
+            snackbar.show();
+        }
+    }
 
     @Override
     public void onResume() {
