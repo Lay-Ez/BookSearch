@@ -2,7 +2,6 @@ package com.romanoindustries.booksearch;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class EditNoteActivity extends AppCompatActivity {
-    private static final String TAG = "EditNoteActivity";
 
     private ImageView thumbIv;
     private TextView authorTv;
@@ -55,7 +53,6 @@ public class EditNoteActivity extends AppCompatActivity {
                             return;
                         }
                     }
-                    Log.e(TAG, "onChanged: couldn't load the book from db. Url=" + bookUrl);
                 }
             }
         });

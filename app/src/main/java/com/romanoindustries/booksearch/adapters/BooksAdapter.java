@@ -19,7 +19,6 @@ import com.romanoindustries.booksearch.imagetransformation.PicassoHelper;
 import java.util.List;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> {
-    private static final String TAG = "BooksAdapter";
 
     private List<Book> books;
     private OnBookListener onBookListener;

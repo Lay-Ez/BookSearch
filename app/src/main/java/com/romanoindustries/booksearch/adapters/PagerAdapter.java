@@ -36,7 +36,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return "Search";
         } else {
-            return "Saved";
+            return "Added";
         }
     }
 }

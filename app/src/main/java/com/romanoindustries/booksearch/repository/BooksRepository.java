@@ -1,7 +1,6 @@
 package com.romanoindustries.booksearch.repository;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BooksRepository {
-
-    private static final String TAG = "BooksRepository";
 
     private static BooksRepository instance;
     private static MutableLiveData<List<Book>> booksMutable;
@@ -66,9 +63,7 @@ public class BooksRepository {
             return;
         }
         URL lastUrl = lastAccessedUrl;
-        Log.d(TAG, "loadMore: lastUrl=" + lastUrl.toString());
         URL urlWithStartingIndex = BookNetworkUtils.recomposeURLWithOffset(lastUrl, totalLoadedResults);
-        Log.d(TAG, "loadMore: newUrl=" + urlWithStartingIndex.toString());
         new LoadMoreBooks().execute(urlWithStartingIndex);
     }
 
@@ -113,7 +108,6 @@ public class BooksRepository {
         protected void onPostExecute(List<Book> books) {
             isLoadingMore.setValue(false);
             if (books.size() == 0 || booksMutable.getValue() == null) {
-                Log.d(TAG, "onPostExecute: endOfListReached");
                 isEndOfListReached = true;
                 return;
             }

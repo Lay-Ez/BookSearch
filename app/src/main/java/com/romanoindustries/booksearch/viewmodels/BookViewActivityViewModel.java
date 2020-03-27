@@ -17,13 +17,14 @@ import java.net.URL;
 
 public class BookViewActivityViewModel extends ViewModel {
 
-    private static final String TAG = "BookViewActivityViewMod";
     private static MutableLiveData<Book> bookMutableLiveData;
     private static MutableLiveData<Boolean> isLoading;
+    private static MutableLiveData<Boolean> isRemoved;
 
     public BookViewActivityViewModel() {
         bookMutableLiveData = new MutableLiveData<>();
         isLoading = new MutableLiveData<>();
+        isRemoved = new MutableLiveData<>();
     }
 
     public void loadBook(String bookUrl) {
@@ -35,7 +36,16 @@ public class BookViewActivityViewModel extends ViewModel {
     }
 
     public void setBookMutableLiveData(Book book) {
+        isRemoved.setValue(false);
         bookMutableLiveData.setValue(book);
+    }
+
+    public void setIsRemoved(boolean removed) {
+        isRemoved.setValue(removed);
+    }
+
+    public LiveData<Boolean> getIsRemoved() {
+        return isRemoved;
     }
 
     public LiveData<Boolean> getIsLoading() {

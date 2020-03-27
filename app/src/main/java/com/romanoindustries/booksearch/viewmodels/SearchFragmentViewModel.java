@@ -11,7 +11,6 @@ import com.romanoindustries.booksearch.repository.BooksRepository;
 import java.util.List;
 
 public class SearchFragmentViewModel extends ViewModel {
-    private static final String TAG = "SearchFragmentViewModel";
 
     private LiveData<List<Book>> booksLiveData;
     private LiveData<Boolean> isLoading;

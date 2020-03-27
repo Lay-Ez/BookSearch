@@ -2,7 +2,6 @@ package com.romanoindustries.booksearch;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,7 +15,6 @@ import com.romanoindustries.booksearch.viewmodels.SavedBooksViewModel;
 import java.util.List;
 
 public class BookViewActivity extends AppCompatActivity {
-    private static final String TAG = "BookViewActivity";
     private BookViewActivityViewModel viewBookViewModel;
 
     @Override
@@ -60,7 +58,6 @@ public class BookViewActivity extends AppCompatActivity {
                             return;
                         }
                     }
-                    Log.e(TAG, "onChanged: couldn't load the book from db. Url=" + bookUrl);
                 }
             }
         });

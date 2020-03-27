@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F4AFB3</color>
-    <color name="colorPrimaryDark">#E18D96</color>
-    <color name="colorAccent">#B5DDD1</color>
+    <color name="colorPrimary">#90CAF9</color>
+    <color name="colorPrimaryDark">#42A5F5</color>
+    <color name="colorAccent">#F9BF90</color>
 
 
     <!--    book view fragment-->
-    <color name="color_button">#F4AFB3</color>
-    <color name="color_when_button_pressed">#E18D96</color>
+    <color name="color_button">#90CAF9</color>
+    <color name="color_when_button_pressed">#90CAF9</color>
     <color name="color_button_disabled">#A0A0A0</color>
-    <color name="color_ripple_trans_button">#F4AFB3</color>
+    <color name="color_ripple_trans_button">#90CAF9</color>
 
     <color name="color_text_button">#000000</color>
     <color name="color_toolbar_text">#000000</color>

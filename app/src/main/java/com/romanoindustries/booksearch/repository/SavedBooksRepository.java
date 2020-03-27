@@ -46,7 +46,7 @@ public class SavedBooksRepository {
 
         private BookDao bookDao;
 
-        public InsertBookAsyncTask(BookDao bookDao) {
+        InsertBookAsyncTask(BookDao bookDao) {
             this.bookDao = bookDao;
         }
 
@@ -61,7 +61,7 @@ public class SavedBooksRepository {
 
         private BookDao bookDao;
 
-        public UpdateBookAsyncTask(BookDao bookDao) {
+        UpdateBookAsyncTask(BookDao bookDao) {
             this.bookDao = bookDao;
         }
 
@@ -76,28 +76,13 @@ public class SavedBooksRepository {
 
         private BookDao bookDao;
 
-        public DeleteBookAsyncTask(BookDao bookDao) {
+        DeleteBookAsyncTask(BookDao bookDao) {
             this.bookDao = bookDao;
         }
 
         @Override
         protected Void doInBackground(Book... books) {
             bookDao.delete(books[0]);
-            return null;
-        }
-    }
-
-    private static class DeleteAllBooksAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        private BookDao bookDao;
-
-        public DeleteAllBooksAsyncTask(BookDao bookDao) {
-            this.bookDao = bookDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void...voids) {
-            bookDao.deleteAllBooks();
             return null;
         }
     }

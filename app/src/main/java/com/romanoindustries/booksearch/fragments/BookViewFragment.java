@@ -53,8 +53,8 @@ public class BookViewFragment extends Fragment {
     private TextView reviewsLabelTv;
     private ExpandableTextView descriptionExpendable;
     private Button showMoreTv;
-    private Button saveButtonTv;
-    private Button previewButtonTv;
+    private Button saveBtn;
+    private Button previewBtn;
     private TextView categoriesTv;
     private Button googlePlayBtn;
     private Button moreInfoBtn;
@@ -63,6 +63,8 @@ public class BookViewFragment extends Fragment {
     private ImageButton editNoteBtn;
 
     private boolean startedFromSavedFragment;
+
+    private BookViewActivityViewModel viewModel;
 
     public BookViewFragment() {
         // Required empty public constructor
@@ -76,7 +78,7 @@ public class BookViewFragment extends Fragment {
         startedFromSavedFragment = Objects.requireNonNull(getActivity()).getIntent().getBooleanExtra(Intent.EXTRA_FROM_STORAGE, false);
 
         initViews(view);
-        BookViewActivityViewModel viewModel = new ViewModelProvider(requireActivity()).get(BookViewActivityViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(BookViewActivityViewModel.class);
         viewModel.getBook().observe(getViewLifecycleOwner(), new Observer<Book>() {
             @Override
             public void onChanged(Book book) {
@@ -88,6 +90,16 @@ public class BookViewFragment extends Fragment {
                     } else {
                         checkIfBookSaved(book);
                     }
+                }
+            }
+        });
+
+        viewModel.getIsRemoved().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isRemoved) {
+                if (isRemoved != null && isRemoved) {
+                    saveBtn.setText(R.string.removed);
+                    saveBtn.setEnabled(false);
                 }
             }
         });
@@ -133,7 +145,7 @@ public class BookViewFragment extends Fragment {
             reviewsLabelTv.setText(getString(R.string.reviews));
         }
 
-        previewButtonTv.setOnClickListener(new View.OnClickListener() {
+        previewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String previewUrl = book.getWebReaderLink();
@@ -142,7 +154,7 @@ public class BookViewFragment extends Fragment {
             }
         });
 
-        saveButtonTv.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveBook(book);
@@ -217,8 +229,8 @@ public class BookViewFragment extends Fragment {
         showMoreTv.setOnClickListener(clickListenerForExpandableSummary);
         descriptionExpendable.setOnClickListener(clickListenerForExpandableSummary);
 
-        previewButtonTv = view.findViewById(R.id.preview_btn);
-        saveButtonTv = view.findViewById(R.id.save_book_button);
+        previewBtn = view.findViewById(R.id.preview_btn);
+        saveBtn = view.findViewById(R.id.save_book_button);
 
         googlePlayBtn = view.findViewById(R.id.google_play_btn);
         moreInfoBtn = view.findViewById(R.id.more_info_btn);
@@ -237,8 +249,8 @@ public class BookViewFragment extends Fragment {
                     for (Book book: books) {
                         if (book.getSelfLink().equals(currentlyViewedBookUrl)) {
                             // change the UI slightly if book isn't viewed from saved list but is IN the saved list
-                            saveButtonTv.setText(R.string.saved);
-                            saveButtonTv.setEnabled(false);
+                            saveBtn.setText(R.string.saved);
+                            saveBtn.setEnabled(false);
                         }
                     }
                 }
@@ -260,13 +272,14 @@ public class BookViewFragment extends Fragment {
     }
 
     private void addRemoveOption() {
-        saveButtonTv.setText(R.string.remove);
-        saveButtonTv.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setText(R.string.remove);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveButtonTv.setText(R.string.removed);
-                saveButtonTv.setEnabled(false);
+                saveBtn.setText(R.string.removed);
+                saveBtn.setEnabled(false);
                 deleteBookOnExit = true;
+                viewModel.setIsRemoved(true);
                 showRemoveSnackbar();
             }
         });
@@ -280,8 +293,8 @@ public class BookViewFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         deleteBookOnExit = false;
-                        saveButtonTv.setText(R.string.remove);
-                        saveButtonTv.setEnabled(true);
+                        saveBtn.setText(R.string.remove);
+                        saveBtn.setEnabled(true);
                     }
                 })
                 .setActionTextColor(getResources().getColor(R.color.colorAccent));
@@ -305,8 +318,20 @@ public class BookViewFragment extends Fragment {
         String dateString = dateFormat.format(new Date(book.getSavedTime()));
         book.setPersonalNote(getString(R.string.note_stub, dateString));
         viewModel.insert(currentlyViewedBook);
-        saveButtonTv.setText(R.string.saved);
-        saveButtonTv.setEnabled(false);
+        saveBtn.setText(R.string.saved);
+        saveBtn.setEnabled(false);
+        showSaveSnackbar();
+    }
+
+    private void showSaveSnackbar() {
+        Snackbar snackbar =  Snackbar
+                .make(getActivity().findViewById(android.R.id.content),
+                        R.string.book_saved_snack,
+                        Snackbar.LENGTH_SHORT);
+        View snackView = snackbar.getView();
+        TextView tv = snackView.findViewById(com.google.android.material.R.id.snackbar_text);
+        tv.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        snackbar.show();
     }
 
     private void putBookInfoInIntent(Intent intent) {
